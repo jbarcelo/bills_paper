@@ -649,111 +649,108 @@ Later in the article we will provide a formula to compute $\psi_{d,\delta}^{B,N}
 As first step, we analyze the simpler case in which $d=0$, which means that all the stations are randomly choosing their transmission slot. 
 This particular case is considered in Proposition \ref{pro:zero_case}.
 
-\begin{proposition}
-\label{pro:zero_case}
-The probability $\psi^{B,N}_{d,\delta}$ in the particular case when $d=0$ is 
-\setlength{\arraycolsep}{0.0em}
-\begin{eqnarray}
-\psi^{B,N}_{0,\delta} & {}={} &\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
-&&{+}\:(-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)!B^N}
-\label{eq:psi_zero}
-\end{eqnarray}
-\end{proposition}
-
-\begin{proof}
-We are considering transitions from the state $S_0$ in which all the stations behave randomly to the other states. 
-Our aim is to compute the transition probabilities from $S_0$ to another state $S_\delta$, $0\leq \delta \leq N$, which is the probability that exactly $\delta$ stations successfully transmit.
-Some intermediate steps are necessary to compute the transition probabilities.
-
-We will define a set of $N$ events which represent the success of each of the $N$ stations and then we consider intersections among these events.
-As an example, to compute the transition from $S_0$ to $S_1$ we need to compute the probability that exactly one of the stations successfully transmits.
-This is a counting problem in which we need to count all the cases in which exactly one of the stations successfully transmit.
-We will use a theorem that addresses this specific problem as we detail in the Appendix.
-
-We number the stations from $1$ to $N$ for convenience, and we define $A_i$, ($i=1,\cdots,N$) the event that station $i$ succeeds and $\mathbf{A}=\{A_i:i=1,\dots,N\}$ the collection of these events.
-Notice that these events are partially overlapping, since it is possible that more than one station successfully transmits.
-
-We derive the probability of the event $A_i$ ($i=1\dots N$) as follows:
-the probability that a tagged stations succeeds is simply the probability that the remaining $N-1$ stations choose a different slot from the tagged station.
-As there are a total of $B-1$ of such slots, the probability that all $N-1$ stations choose among those $B-1$ slots out of the total $B$ slots is given by
-\begin{equation}
-P(A_i)=\left(\frac{B-1}{B} \right)^{N-1}.
-\end{equation}
-
-In the following, we will derive the probability that a selection of $j$ tagged stations succeeds.
-Let $\mathbf{A}^j$ be a set of $j$ ($j\leq N$) events in $\mathbf{A}$, that is $\mathbf{A}^j \subseteq \mathbf{A}, |\mathbf{A}^j|=j$.
-Without loss of generality, and to clarify the explanation, we take the ordered list of the tagged stations and assume that they choose, one by one, from 1 to $j$, the slot in which they transmit. 
-The first tagged station chooses any slot.
-The second station chooses any slot different from the one chosen by the first one with probability $(B-1)/B$. 
-In general, the $l$-th ($1 \leq l \leq j$) tagged station chooses one of the remaining slots with probability $(B-(l-1))/B$.
-Finally, we need that the remaining $N-j$ non tagged stations (if any) choose the slots that are not occupied by the tagged stations, which occurs with probability $\left( \frac{B-j}{B}\right)^{N-j}$.
-
-Summing up, for $1 \leq j \leq N-1$ the probability that all the $j$ tagged stations successfully transmit is given by
-\begin{equation}
-\label{eq:prob_j_sta_transmit}
-P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j},
-\end{equation}
-where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$ and $j=1\dots N-1$.
-
-Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
-\begin{equation}
-\label{eq:PA}
-P\left( A_\cap \right) = \frac{B! (B-j)^{N-j}}{(B-j)! B^N},
-\quad j=1\dots N-1.
-\end{equation}
-
-Now, let us define $S(0,j)$ as the sum of the probabilities of occurrence of all the $\binom{N}{j}$ subsets $\mathbf{A}^j$ of size $|\mathbf{A}^j|=j$. For $j < N$ it is, 
-
-\begin{eqnarray}
-\label{eq:S0j}
-S(0,j) & {}={}  & \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) \\
-&{}={}& \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N},
-\quad j=1 \dots N-1. \nonumber
-\end{eqnarray}
-
-The expressions for (\ref{eq:PA}) and (\ref{eq:S0j}) in the case that all the stations succeed ($j=N$) are:
-\begin{equation}
-P\left( \bigcap_{ A_i \in \mathbf{A}^N } A_i \right) = \frac{B!}{(B-N)! B^N}
-,
-\end{equation}
-
-and
-\begin{equation}
-S(0,N)=\sum_{\scriptstyle \mathbf{A}^N\subseteq\mathbf{A}} P\biggl(\bigcap_{A_i\in \mathbf{A}^N} A_i \biggr) 
-=\frac{B!}{(B-N)! B^N}.
-\end{equation}
-
-
-
-Finally, we will derive the value of $\psi_{0,n}^{B,N}$ applying the theorem in Sec. IV.3 of \cite{feller1968ipt} as exemplified in the Appendix.
-The result is:
-
-\begin{equation}
-\begin{split}
-\psi^{B,N}_{0,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j)= \\
-\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N}
-+ (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
-\end{split}
-\label{eq:psi_zero}
-\end{equation}
-
-
-\end{proof}
+%\begin{proposition}
+%\label{pro:zero_case}
+%The probability $\psi^{B,N}_{d,\delta}$ in the particular case when $d=0$ is 
+%\setlength{\arraycolsep}{0.0em}
+%\begin{eqnarray}
+%\psi^{B,N}_{0,\delta} & {}={} &\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
+%&&{+}\:(-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)!B^N}.
+%\label{eq:psi_zero}
+%\end{eqnarray}
+%\end{proposition}
+%
+%\begin{proof}
+%We are considering transitions from the state $S_0$ in which all the stations behave randomly to the other states. 
+%Our aim is to compute the transition probabilities from $S_0$ to another state $S_\delta$, $0\leq \delta \leq N$, which is the probability that exactly $\delta$ stations successfully transmit.
+%Some intermediate steps are necessary to compute the transition probabilities.
+%
+%We will define a set of $N$ events which represent the success of each of the $N$ stations and then we consider intersections among these events.
+%As an example, to compute the transition from $S_0$ to $S_1$ we need to compute the probability that exactly one of the stations successfully transmits.
+%This is a counting problem in which we need to count all the cases in which exactly one of the stations successfully transmit.
+%We will use a theorem that addresses this specific problem as we detail in the Appendix.
+%
+%We number the stations from $1$ to $N$ for convenience, and we define $A_i$, ($i=1,\cdots,N$) the event that station $i$ succeeds and $\mathbf{A}=\{A_i:i=1,\dots,N\}$ the collection of these events.
+%Notice that these events are partially overlapping, since it is possible that more than one station successfully transmits.
+%
+%We derive the probability of the event $A_i$ ($i=1\dots N$) as follows:
+%the probability that a tagged stations succeeds is simply the probability that the remaining $N-1$ stations choose a different slot from the tagged station.
+%As there are a total of $B-1$ of such slots, the probability that all $N-1$ stations choose among those $B-1$ slots out of the total $B$ slots is given by
+%\begin{equation}
+%P(A_i)=\left(\frac{B-1}{B} \right)^{N-1}.
+%\end{equation}
+%
+%In the following, we will derive the probability that a selection of $j$ tagged stations succeeds.
+%Let $\mathbf{A}^j$ be a set of $j$ ($j\leq N$) events in $\mathbf{A}$, that is $\mathbf{A}^j \subseteq \mathbf{A}, |\mathbf{A}^j|=j$.
+%Without loss of generality, and to clarify the explanation, we take the ordered list of the tagged stations and assume that they choose, one by one, from 1 to $j$, the slot in which they transmit. 
+%The first tagged station chooses any slot.
+%The second station chooses any slot different from the one chosen by the first one with probability $(B-1)/B$. 
+%In general, the $l$-th ($1 \leq l \leq j$) tagged station chooses one of the remaining slots with probability $(B-(l-1))/B$.
+%Finally, we need that the remaining $N-j$ non tagged stations (if any) choose the slots that are not occupied by the tagged stations, which occurs with probability $\left( \frac{B-j}{B}\right)^{N-j}$.
+%
+%Summing up, for $1 \leq j \leq N-1$ the probability that all the $j$ tagged stations successfully transmit is given by
+%\begin{equation}
+%\label{eq:prob_j_sta_transmit}
+%P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j},
+%\end{equation}
+%where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$ and $j=1\dots N-1$.
+%
+%Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
+%\begin{equation}
+%\label{eq:PA}
+%P\left( A_\cap \right) = \frac{B! (B-j)^{N-j}}{(B-j)! B^N},
+%\quad j=1\dots N-1.
+%\end{equation}
+%
+%Now, let us define $S(0,j)$ as the sum of the probabilities of occurrence of all the $\binom{N}{j}$ subsets $\mathbf{A}^j$ of size $|\mathbf{A}^j|=j$. For $j < N$ it is, 
+%
+%\begin{eqnarray}
+%\label{eq:S0j}
+%S(0,j) & {}={}  & \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) \\
+%&{}={}& \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N},
+%\quad j=1 \dots N-1. \nonumber
+%\end{eqnarray}
+%
+%The expressions for (\ref{eq:PA}) and (\ref{eq:S0j}) in the case that all the stations succeed ($j=N$) are:
+%\begin{equation}
+%P\left( \bigcap_{ A_i \in \mathbf{A}^N } A_i \right) = \frac{B!}{(B-N)! B^N}
+%,
+%\end{equation}
+%
+%and
+%\begin{eqnarray}
+%S(0,N) &{}={}& \sum_{\scriptstyle \mathbf{A}^N\subseteq\mathbf{A}} P\biggl(\bigcap_{A_i\in \mathbf{A}^N} A_i \biggr) \nonumber\\
+%&{}={}& \frac{B!}{(B-N)! B^N}.
+%\end{eqnarray}
+%
+%
+%
+%Finally, we will derive the value of $\psi_{0,n}^{B,N}$ applying the theorem in Sec. IV.3 of \cite{feller1968ipt} as exemplified in the Appendix.
+%The result is:
+%
+%\begin{equation}
+%\begin{split}
+%\psi^{B,N}_{0,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j)= \\
+%\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N}
+%+ (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
+%\end{split}
+%\label{eq:psi_zero}
+%\end{equation}
+%
+%
+%\end{proof}
 
 \begin{proposition}
 \label{pro:general_case}
 The probability $\psi^{B,N}_{d,\delta}$ is 
-\begin{equation}
-\begin{split}
-\psi^{B,N}_{d,\delta} = \\
-\sum_{j=\delta}^{N-1} (-1)^{j+\delta} \binom{j}{\delta} 
+\begin{eqnarray}
+\psi^{B,N}_{d,\delta} & {}={} & \sum_{j=\delta}^{N-1} (-1)^{j+\delta} \binom{j}{\delta}  \nonumber\\
 \sum_{i=max(0,j+d-N)}^{min(d,j)} \binom{d}{i} \binom{N-d}{j-i} 
 \frac{(B-d)! (B-j)^{N-d-(j-i)}}{(B-d-(j-i))! B^{N-d}}
-+ \\
++ \nonumber\\
 (-1)^{N+\delta} \binom{N}{\delta} \frac{(B-d)!}{(B-N)!B^{N-d}}
-\end{split}
 \label{eq:psi}
-\end{equation}
+\end{eqnarray}
 \end{proposition}
 
 \begin{remark}
