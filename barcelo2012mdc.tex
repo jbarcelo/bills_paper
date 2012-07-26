@@ -690,12 +690,12 @@ Finally, we need that the remaining $N-j$ non tagged stations (if any) choose th
 
 Summing up, for $1 \leq j \leq N-1$ the probability that all the $j$ tagged stations successfully transmit is given by
 
-\begin{equation}
+\begin{eqnarray}
 \label{eq:prob_j_sta_transmit}
-P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j}\quad j=1\dots N-1,
+P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j},
 \end{equation}
 
-where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$.
+where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$ and $j=1\dots N-1$.
 
 Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
 \begin{equation}
