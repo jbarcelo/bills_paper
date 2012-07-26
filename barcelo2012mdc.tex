@@ -701,16 +701,15 @@ Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
 P\left( A_\cap \right) = \frac{B! (B-j)^{N-j}}{(B-j)! B^N},
 \quad j=1\dots N-1.
 \end{equation}
-where $j=1\dots N-1$.
 
 Now, let us define $S(0,j)$ as the sum of the probabilities of occurrence of all the $\binom{N}{j}$ subsets $\mathbf{A}^j$ of size $|\mathbf{A}^j|=j$. For $j < N$ it is, 
 
-\begin{equation}
+\begin{eqnarray}
 \label{eq:S0j}
-S(0,j)=\sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) 
-=\sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N}
+S(0,j) & {}={}  & \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) \nonumber\\
+&{}={}& \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N},
 \quad j=1 \dots N-1.
-\end{equation}
+\end{eqnarray}
 
 The expressions for (\ref{eq:PA}) and (\ref{eq:S0j}) in the case that all the stations succeed ($j=N$) are:
 \begin{equation}
