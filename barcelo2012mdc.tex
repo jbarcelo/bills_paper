@@ -29,7 +29,7 @@
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
 %% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% FITNESS FOR A PARTICULAR PURPOSE!
 %% User assumes all risk.
 %% In no event shall IEEE or any contributor to this code be liable for
 %% any damages or losses, including, but not limited to, incidental,
@@ -64,9 +64,73 @@
 % draft mode.
 %
 \documentclass[journal]{IEEEtran}
+
 \newtheorem{definition}{Definition}
-\newtheorem{proposition}{Proposition} 
-\newtheorem{remark}{Remark} 
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+
+% to add comments in different colors (added by Azadeh)
+\usepackage[usenames]{color}
+\usepackage{lscape}
+\usepackage{soul}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\black}[1]{{\color{black} #1}}
+
+\newcommand{\Az}[1]{{\color{blue}{#1}}}
+\newcommand{\AzCom}[1]{{\it \color{magenta} [#1]}}
+%\newcommand{\AzDel}[1]{{\color{red} \st{#1}}}
+\newcommand{\AzDel}[1]{{\color{red}{\{REMOVE: #1\}}}}
+
+\newdimen\snellbaselineskip
+\newdimen\snellskip
+\snellskip=1.5ex
+\snellbaselineskip=\baselineskip
+\def\srule{\omit\kern.5em\vrule\kern-.5em}
+\newbox\bigstrutbox
+\setbox\bigstrutbox=\hbox{\vrule height14.5pt depth9.5pt width0pt}
+\def\bigstrut{\relax\ifmmode\copy\bigstrutbox\else\unhcopy\bigstrutbox\fi}
+\def\middlehrule#1#2{\noalign{\kern-\snellbaselineskip\kern\snellskip}
+&\multispan#1\strut\hrulefill
+&\omit\hbox to.5em{\hrulefill}\vrule
+height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
+
+
+\makeatletter
+\def\bordermatrix#1{\begingroup \m@th
+  \@tempdima 8.75\p@
+  \setbox\z@\vbox{%
+    \def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
+    \ialign{$##$\hfil\kern2\p@\kern\@tempdima&\thinspace\hfil$##$\hfil
+      &&\quad\hfil$##$\hfil\crcr
+      \omit\strut\hfil\crcr\noalign{\kern-\snellbaselineskip}%
+      #1\crcr\omit\strut\cr}}%
+  \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{\unhbox\@ne\unskip\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{$\kern\wd\@ne\kern-\@tempdima\left(\kern-\wd\@ne
+    \global\setbox\@ne\vbox{\box\@ne\kern2\p@}%
+    \vcenter{\kern-\ht\@ne\unvbox\z@\kern-\snellbaselineskip}\,\right)$}%
+  \null\;\vbox{\kern\ht\@ne\box\tw@}\endgroup}
+\makeatletter
+
+\makeatletter
+\def\bordermatrix#1{\begingroup \m@th
+  \@tempdima 8.75\p@
+  \setbox\z@\vbox{%
+    \def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
+    \ialign{$##$\hfil\kern2\p@\kern\@tempdima&\thinspace\hfil$##$\hfil
+      &&\quad\hfil$##$\hfil\crcr
+      \omit\strut\hfil\crcr\noalign{\kern-\snellbaselineskip}%
+      #1\crcr\omit\strut\cr}}%
+  \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{\unhbox\@ne\unskip\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{$\kern\wd\@ne\kern-\@tempdima\left(\kern-\wd\@ne
+    \global\setbox\@ne\vbox{\box\@ne\kern2\p@}%
+    \vcenter{\kern-\ht\@ne\unvbox\z@\kern-\snellbaselineskip}\,\right)$}%
+  \null\;\vbox{\kern\ht\@ne\box\tw@}\endgroup}
+\makeatletter
+
 %
 % If IEEEtran.cls has not been installed into the LaTeX system files,
 % manually specify the path to it like:
@@ -149,7 +213,7 @@
 % graphicx was written by David Carlisle and Sebastian Rahtz. It is
 % required if you want graphics, photos, etc. graphicx.sty is already
 % installed on most LaTeX systems. The latest version and documentation can
-% be obtained at: 
+% be obtained at:
 % http://www.ctan.org/tex-archive/macros/latex/required/graphics/
 % Another good source of documentation is "Using Imported Graphics in
 % LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
@@ -276,7 +340,7 @@
 % IEEEtran.cls handling of captions and this will result in nonIEEE style
 % figure/table captions. To prevent this problem, be sure and preload
 % caption.sty with its "caption=false" package option. This is will preserve
-% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later
 % (recommended due to many improvements over 1.2) of subfig.sty supports
 % the caption=false option directly:
 %\usepackage[caption=false,font=footnotesize]{subfig}
@@ -362,7 +426,7 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/endfloat/
 %
 % The IEEEtran \ifCLASSOPTIONcaptionsoff conditional can also be used
-% later in the document, say, to conditionally put the References on a 
+% later in the document, say, to conditionally put the References on a
 % page by themselves.
 
 
@@ -391,6 +455,10 @@
 
 
 % correct bad hyphenation here
+
+\def\Abf{{\mathbf{A}}}
+\def\Pbf{{\mathbf{P}}}
+\newcommand{\pr}[1]{\Pr \left\{#1\right\}}
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 
@@ -419,10 +487,10 @@ GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this %
 \thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
 \thanks{Manuscript received April 19, 2005; revised January 11, 2007.}}
 
-% note the % following the last \IEEEmembership and also \thanks - 
+% note the % following the last \IEEEmembership and also \thanks -
 % these prevent an unwanted space from occurring between the last author name
 % and the end of the author line. i.e., if you had this:
-% 
+%
 % \author{....lastname \thanks{...} \thanks{...} }
 %                     ^------------^------------^----Do not want these spaces!
 %
@@ -444,7 +512,7 @@ GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this %
 {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
-% 
+%
 % *** Note that you probably will NOT want to include the author's ***
 % *** name in the headers of peer review papers.                   ***
 % You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
@@ -472,11 +540,13 @@ GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this %
 
 
 \begin{abstract}
+In this paper, the problem of distributed radio resource assignment in wireless networks is defined as a Decentralized Constraint Satisfaction (DCS) problem \cite{duffy2011dcs}. A protocol to allocate channel slots to contending stations in a multiple access scenario is used as the reference example. A particular solver that iteratively uses a stochastic search until it converges to a solution is considered. The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived. The expected number of steps required to reach a solution is found by calculating the MC's expected number of steps to absorption. The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
+
 %\boldmath
-In this paper we use a Markov Chain to model a simple solver for Decentralized Constrain Satisfaction problems.
-We provide closed expressions to compute the transition probabilities and the transition probabilities matrix can then be used to determine the expected number of steps that the system requires to converge to a solution.
-We use a protocol to allocate channel slots to contending stations as an illustrating example, and extend our model to contemplate the possibility of channel errors.
-The model is validated by means of simulation and we show that it can be easily extended to account for the presence of errors.
+%In this paper we use a Markov Chain to model a simple solver for Decentralized Constrain Satisfaction problems.
+%We provide closed-form expressions to compute the transition probabilities and the transition probabilities matrix can then be used to determine the expected number of steps that the system requires to converge to a solution.
+%We use a protocol to allocate channel slots to contending stations as an illustrating example, and extend our model to contemplate the possibility of channel errors.
+%The model is validated by means of simulation and we show that it can be easily extended to account for the presence of errors.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -510,36 +580,57 @@ Decentralized constraint satisfaction, Markov Chain model, collision-free operat
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-% 
+%
 % form to use if the first word consists of a single letter:
 % \IEEEPARstart{A}{demo} file is ....
-% 
+%
 % form to use if you need the single drop letter followed by
 % normal text (unknown if ever used by IEEE):
 % \IEEEPARstart{A}{}demo file is ....
-% 
+%
 % Some journals put the first two words in caps:
 % \IEEEPARstart{T}{his demo} file is ....
-% 
+%
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{I}{n} this paper we discuss a family of protocols that can be used for radio resource assignment in wireless networks.
-The problem assigning the resources in a distributed fashion is defined as a Decentralized Constraint Satisfaction (DCS) problem \cite{duffy2011dcs}.
-We consider a particular solver for this family of problems that works iteratively, in several rounds, to find a solution to the problem.
-The solver performs an stochastic search until it converges to a solution.
+
+% \IEEEPARstart{I}{n} this paper we discuss a family of protocols that can be used for radio resource assignment in wireless networks.
+% The problem of assigning resources in a distributed fashion is defined as a Decentralized Constraint Satisfaction (DCS) problem \cite{duffy2011dcs}.
+% We consider a particular solver for this family of problems that works iteratively, in several rounds, to find a solution to the problem.
+
+% The solver performs a stochastic search until it converges to a solution.
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
 
-We are interested in the convergence process, and in particular in forecasting which is the expected number of steps required to reach a solution.
-To this end, and absorbing Markov Chain (MC) model can be used to model the solver.
-The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
+\IEEEPARstart{S}{ince} the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role in arbitrating the access to the channel. The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}. The contending stations use carrier sense to prevent stations from interrupting other transmissions. Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission. Until today, this backoff counter has been initialized with a random value. Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
+
+Recently, it has been pointed out that the random choice of the backoff value is not necessary after successful transmissions \cite{barcelo2008lba}.
+\AzDel{In fact, if the backoff value is deterministically chosen after successful transmissions, the chances of collisions are reduced.}
+\Az{In fact, if all the nodes that have successfully transmitted choose a common deterministic backoff value for their next transmission, the chances of collisions are reduced, since in their next transmission they may only collide with the remaining unsuccessful nodes.} Furthermore, under certain idealistic conditions, a collision-free operation can be reached. 
+
+The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm}. \Az{The goal of this class of protocols is to distributively build a collision-free schedule which will then repeat periodically. This translates into the decentralized assignment of stations to slots within one period of the schedule in such a way that there is no slot that contains more than one station.} Nevertheless, similar problems can be found in other areas of networking. Examples are provided in \cite{duffy2011dcs}, where this family of problems is accurately defined and named \emph{Decentralized Constraint Satisfaction} (DCS). The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
+
+We are interested in the convergence process, and in particular in forecasting the expected number of steps required to reach a solution. To this end, an absorbing Markov Chain (MC) model can be used to model the solver. The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
 The second contribution is the adaptation of the model to an environment in which errors can occur.
 
-In the next section, we will introduce some related work to contextualize our contribution.
-Then, in Sect. \ref{}, we define DCSs problems, and we will exemplify them by introducing a reference protocol in Sect. \ref{}.
-This reference protocol makes it possible to construct a collision-free schedule in a wireless local area network (WLAN) in a distributed fashion.
-The actual absorbing MC model is introduced in Sect. \ref{}, which also offers the expressions to compute the transition probabilities.
-These probabilities can be used to compute the expected number of steps required for the system to converge to a solution, as described in Sect. \ref{}. 
+\AzDel{It is possible to model a protocol in which a deterministic backoff is used after successful collisions and a random backoff otherwise as an MC \cite{he2009srb, barcelo2010fcc}.
+This model is just a mathematically amenable approximation of the actual protocols.
+We will describe this model in the next section, and it will be used as a reference protocol for the rest of the paper.} \AzCom{Can we include \cite{barcelo2010fcc} with the other stuff listed above?}
+
+
+\AzDel{In the present paper, we will consider a particular instance of that solver and compute the expected number of rounds that are required by the solver to find the solution.}
+
+\AzDel{We will use the convention to say that a slot is successful when there is a single station transmitting in that slot.
+Similarly, we will refer to the station transmitting in the successful slot as a successful station.
+In our analysis, we will be presented with the problem of counting the number of successful slots when $N$ stations choose among $B$ slots.
+The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
+However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.} \AzCom{Not really introduction material. Remove or move elsewhere if needed!}
+
+\AzCom{We are presenting the CSMA stuff as just an example. Therefore, prior work cannot be only on our example but should be on the actual problem, i.e., DCS. We need some references, maybe on CS itself if there are not many on DCS and then highlight that the DCS stuff is recent.}
+
+In the next section, we define the DCS problems, and we will exemplify them by introducing a reference protocol in Sect. \ref{}. The reference protocol constructs a collision-free schedule in a wireless local area network (WLAN) in a distributed fashion. 
+The actual absorbing MC model is introduced in Sect. \ref{} where the expressions to compute the transition probabilities are also derived.
+These probabilities can be used to compute the expected number of steps required for the system to converge to a solution, as described in Sect. \ref{}.
 This section also describes the extension of the model to an environment in which errors (e.g., channel errors) can occur.
 To validate the model, we present some numerical results in Sect. \ref{}.
 Finally, Sect.{} concludes the paper.
@@ -553,83 +644,57 @@ Finally, Sect.{} concludes the paper.
 %The model is described in Sect. \ref{sec:markov_chain} and numerical results are presented in Sect.~\ref{sec:numerical_results}.
 %Finally, Sect.~\ref{sec:conclusion} concludes the paper.
 
-\section{Related Work}
-Since the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role to arbitrate the access to the channel.
-The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}.
-The contending stations use carrier sense to prevent that a station interrupts another transmission.
-Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission.
-Until today, this backoff counter has been initialized with a random value.
-Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
-
-Recently, it has been pointed out that the random choice of the backoff value is not necessary after successful transmissions \cite{barcelo2008lba}.
-In fact, if the backoff value is deterministically chosen after successful transmissions, the chances of collisions are reduced.
-Furthermore, under certain idealistic conditions, the collision-free operation can be reached.
-The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g, \cite{he2009srb,barcelo2011tcf,fang2011dlm}.
-
-It is possible to model a protocol in which a deterministic backoff is used after successful collisions and a random backoff otherwise as a Markov Chain \cite{he2009srb, barcelo2010fcc}.
-This model is just a mathematically amenable approximation of the actual protocols.
-We will describe this model in the next section, and it will be used as a reference protocol for the rest of the paper.
-
-The problem that is addressed by this protocol is the decentralized assignment of stations to slots in such a way that there is no slot that contains more than one stations.
-Nevertheless, similar problems can be found in other areas of networking.
-Examples are provided in \cite{duffy2011dcs}, that accurately defines this family of problems and names it \emph{Decentralized Constraint Satisfaction} (DCS).
-The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
-
-In the present paper, we will consider a particular instance of that solver and compute the expected number of rounds that are required by the solver to find the solution.
-
-We will use the convention to say that a slot is successful when there is a single station transmitting in that slot.
-Similarly, we will refer to the station transmitting in the successful slot as a successful station.
-In our analysis, we will be presented with the problem of counting the number of successful slots when $N$ stations choose among $B$ slots.
-The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
-However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.
+% \section{Related Work}
 
 
 \section{Decentralized Constraint Satisfaction}
 \label{sec:dcs}
-The analytical model we present in this paper describes what is defined as a Decentralized Constraint Satisfaction problem. A Constraint Satisfaction problem with $N$ variables is defined as follows (adopting the notation from \cite{duffy2011dcs}).
-We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, each one taking values in a finite set $\mathbf{B}=\left\{1, \dots, B \right\} \subset \mathbb{N} $.
-We consider also $M$ clauses that are boolean functions, $\left\{ \Phi_1(\mathbf{x}),\dots,\Phi_M(\mathbf{x}) \right\}$.
-These $M$ clauses represent the constraints and take a value equal to 1 if the constrained is satisfied and 0 otherwise.
+A Constraint Satisfaction problem with $N$ variables is defined as follows (adopting the notation from \cite{duffy2011dcs}).
+We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \in \mathbf{B}=\left\{1, \dots, B \right\}, \forall i $, and $M$ clauses, $\left\{ \Phi_1(\mathbf{x}),\dots,\Phi_M(\mathbf{x}) \right\}$, that are boolean functions.
+The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
 An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
-While there are solvers for this kind of problem, they are typically centralized, i.e., assuming that the solver has the complete information about all variables. 
-In the reality of data networks in particular, this assumption normally does not hold. Examples typically can be found in the area of wireless networks, e.g., wireless sensor or mesh networks. 
 
-A solver for DCS problems in presented in \cite{duffy2011dcs} that searches for a solution of the problem using an iterative approach.
-The solver learns from previous mistakes in order to increase the chances of reaching the solution in the next step.
-In a first step, the variables take one of the possible values with equal probability.
-Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
+While there are solvers for this kind of problem, they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks, e.g., wireless sensor or mesh networks, where nodes typically function in the absense of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
+
+\Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
+
+\AzDel{The analytical model we present in this paper describes what is referred to as a Decentralized Constraint Satisfaction (DCS) \Az{solver} \AzDel{problem}.}
+A DCS solver is presented in \cite{duffy2011dcs} that searches for a solution of the problem using an iterative approach. The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
 The solver uses two different parameters, $a$ and $b$, to adjust the learning process.
-An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exist, and its performance is comparable to the known centralized solvers.
-%Here, the variables can be interpreted as the channel chosen by a device in a shared medium. This channel may for example be a frequency or a time slot. The clauses then evaluate if two or more stations chose the same channel (in which case, collisions occur), or all have selected their own channel (the desired situation). 
+An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
+%Here, the variables can be interpreted as the channel chosen by a device in a shared medium. This channel may for example be a frequency or a time slot. The clauses then evaluate if two or more stations chose the same channel (in which case, collisions occur), or all have selected their own channel (the desired situation).
 
 %No communication can occur between the endpoints trying to solve the Constraint Satisfaction Problem, since the problem is to establish a collision-free communication in the first place. Therefore, we are here considering a special case, namely a DCS problem. Essentially, this means that any device sharing the medium only can control one variable, namely its channel selection, and only has information about the clauses including this variable, namely whether a collision occurred or not.
 
-To illustrate this, we will briefly cover two examples. 
-First, the assignment of frequency channels to WLAN access point and, second, the assignment of time slots to contending wireless stations in a WLAN.
-The first is a set of WLAN access points, which need to select the channels they use in a distributed fashion. Since access points too close to each other may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem, with the set of different channels to choose from at each access point being the possible values of the variable, the number of variables being the number of access points considered, and the clauses describing, for every pair of access points in interference range, whether they have selected the same channel or not.
+To illustrate how the constraint satisfaction problem maps to paractical scenarios, we will briefly cover two examples. First, the assignment of frequency channels to WLAN access points and, second, the assignment of time slots to contending wireless stations in a WLAN, which we will use as our reference scenario.
+The first example consists in a set of WLAN access points that need to select the channels they use in a distributed fashion. Since the access points that are close to one another may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem. Here variable $x_i$ indicates the channel for access point $i$, chosen from the set of available channels $\mathbf{B}$. There is one clause per every pair of access points in each other's interference range, indicating whether they have selected the same channel or not.
 
-The second problem under consideration is the assignment of $N$ wireless stations to $B$ channel time slots.
-A solution to the problem is an assignment in which there is no slot containing more than one wireless stations.
-If two wireless stations are assigned to the same slot, a collision occurs and their packets are garbled.
-The stations that suffer a collision, are aware of this situation because they don't receive an acknowledgement for their transmitted packet.
-In the next section, we describe a protocol that solves this problem whenever a solution exists.
-The proposed protocol is, in fact, an instance of the solver proposed in \cite{duffy2011dcs} parameterized with the values $a=b=1$.
+\section{The Reference Scenario}
 
-\section{The reference protocol}
+The second example, and our reference scenario, is the distributed assignment of $N$ contending wireless stations to $B$ channel time slots. \Az{In each slot a single transmission can be completed and acknowledged.} 
+From a station's perspective, there are two possible outcomes for every transmission.
+The station succeeds if no other station is assigned the same slot. \Az{A successful transmission is acknowledged within the same slot in which the transmission has taken place.}
+If at least one other station picks the same slot, all stations involved will suffer a collision, and the transmission is unsuccessful, \Az{in which case no acknowledgement will be received}.
 
-The protocol described in this section distributively construct a collision free schedule among $N$ contending wireless stations.
-The contention is organized in transmission rounds which contain $B$ transmission slots, and in each round each station transmits only once.
-Each station independently pick one of the $B$ possible slots in the round.
-From the station's perspective, there are two possible outcomes.
-A station succeeds if no other station picks the same slot for transmission.
-If two or more stations pick the same slot, they all suffer a collision.
+% If two or more wireless stations are assigned to the same slot, a collision occurs and their packets are garbled. 
+% The stations that suffer a collision, are aware of this situation because they don't receive an acknowledgement for their transmitted packet.
 
-The protocol should describe how the stations pick the transmission slot in each of the transmission rounds, taking into account that each station is aware of the outcome of the previous transmission round.
+\Az{For this example, the variables $\{x_i\}_{i=1}^{N}$ in the corresponding constraint satisfaction problem are the slots chosen by the $N$ contending wireless stations from the set of available slots $\mathbf{B}$. Again, there is one clause per pair of variables evaluating if they have the same value or not. The clause will return 0 if the two participating stations have selected the same slot (i.e., collision) and returns 1 otherwise.}
+% This is equivalent to checking if two stations have selected the same slot for transmission or not.
+
+% For this example, the values of the variables in the corresponding DCS problem are the different slots to choose from, while the number of variables is the number of stations sharing the channel. The clauses are again evaluating, for each pair of variables, if they have the same value or not.
+% This is equivalent to check if two stations have selected the same slot for transmission or not.
 
 
-As a second example, we consider carrier sense multiple access with collision avoidance (CSMA/CA). Here, a contending station with a packet to transmit defers its transmission for a random number of slots if the (shared) channel is sensed busy.
+\section{The Reference Protocol}
+
+In this section, we describe a protocol that distributively solves the problem posed in the previous section, whenever a solution exists. The contention is organized in transmission rounds that contain $B$ transmission slots. In every round, each of the $N$ stations transmit exactly once. A solution to the problem is an assignment in which there is no slot containing more than one wireless stations. The protocol describes how the stations pick their transmission slots in each of the transmission rounds, taking into account that each station is only aware of the outcome of its own transmission in the previous round.
+
+The protocol works as follows. In the first round, each station randomly and independently picks one of the $B$ possible slots in the round. If the transmission is successful, the station will pick exactly the same slot in the next round. Otherwise, it will pick one of the $B$ slots in the next time randomly. This process repeats until all stations successfully transmit in the same round, from which point on, all the stations will transmit periodically and no collisions will occur. The operation of this protocol is illustrated in Fig.~\ref{fig:csma_eca_compact} for five consecutive rounds. In this example, a collision-free solution is reached in the fourth round, after which the same schedule can be repeated endlessly without further collisions.
+
+\AzDel{As a second example, we consider carrier-sense multiple-access with collision avoidance (CSMA/CA). Here, a contending station with a packet to transmit defers its transmission for a random number of slots if the (shared) channel is sensed busy.
 This protocol reduces the likelihood of collisions as a collision happens only when two or more contending stations select the same slot for transmission.
-The operation of the protocol is illustrated in Fig.~\ref{fig:csma_ca_compact}.
+The operation of the protocol is illustrated in Fig.~\ref{fig:csma_ca_compact}. \AzCom{The figure is not very clear to me for CSMA/CA. Do we really have to mention CSMA/CA anyway?}}
 
 \begin{figure}
   \centering
@@ -645,266 +710,336 @@ The operation of the protocol is illustrated in Fig.~\ref{fig:csma_ca_compact}.
   \label{fig:csma_eca_compact}
 \end{figure}
 
-CSMA/CA can be improved if the participating stations defer the transmission for a deterministic backoff after successful transmissions.
-This approach is represented in Fig.~\ref{fig:csma_eca_compact}.
-The variant of the protocol that uses a deterministic backoff after successful transmissions is called CSMA with enhanced collision avoidance (CSMA/ECA).
-A more detailed explanation of CSMA/ECA can be found in, e.g., \cite{barcelo2008lba,barcelo2009tpc,he2009srb,fang2011dlm}.
+\AzDel{CSMA/CA can be improved if the participating stations defer the transmission for a deterministic backoff after successful transmissions.}
 
-For this example, the values of the variables in the according DCS problem are the different slots to choose from, while the number of variables is the number of stations sharing the channel. The clauses are again evaluating, for each pair of variables, if they have the same value or not.
-This is equivalent to check if two stations have selected the same slot for transmission or not.
+This protocol is a simplified version of a variant of CSMA/CA, called CSMA with enhanced collision avoidance (CSMA/ECA). A detailed explanation of CSMA/ECA can be found in, e.g., \cite{barcelo2008lba,barcelo2009tpc,he2009srb,fang2011dlm}.
 
-For these problems, a DCS solver has been presented in \cite{duffy2011dcs}. The contribution of this paper is to present an analytical model based on a MC that describes the behavior of this solver in a specific case, as described in the next section.
+
+\AzDel{For these problems, a DCS solver has been presented in \cite{duffy2011dcs}. The contribution of this paper is to present an analytical model based on a MC that describes the behavior of this solver in a specific case, as described in the next section.}
+
+\Az{The reference protocol can be viewed as a distributed solver for the corresponding constraint satisfaction problem defined in the previous section. In the first round, the variables $x_i$ are assigned a value in $\{1,\cdots, B \}$ randomly, with probability $1/B$. Then the constraints are evaluated.
+Those variables that are involved in constraints that are not satisfied take a random value again in the next round, while the other variables keep the same value as in the previous round.
+When a solution is reached, all the variables keep the same value. This solver is, in fact, an instance of the parametrized solver proposed in \cite{duffy2011dcs} with the parameter values set to $a=b=1$.}
+
 
 \section{The Markov Chain Model}
 \label{sec:markov_chain}
 
-The solver developed in \cite{duffy2011dcs} uses two parameters $a$ and $b$, that we set to one. With this parametrization, the behavior of the solver is extremely simple.
-In a first step, the variables $x_i$ are assigned a value randomly. Then the constraints are evaluated.
-Those variables that are involved in constraints that are not satisfied take a random value in the next step, while the other variables keep the same value as in the previous step.
-When the solution is reached, all the variables keep the same value.
-This is, e.g., roughly equivalent to the CSMA/ECA protocol described in the previous section.
-In the protocol, when all the stations successfully transmit, a collision-free schedule has been reached that it is repeated in the following rounds.
+% With this parametrization, the behavior of the solver is extremely simple.
+% In the first step, the variables $x_i$ are assigned a value randomly. Then the constraints are evaluated.
+% Those variables that are involved in constraints that are not satisfied take a random value in the next step, while the other variables keep the same value as in the previous step.
+% When the solution is reached, all the variables keep the same value.
+% \AzDel{This is, e.g., roughly equivalent to the CSMA/ECA protocol described in the previous section.} \Az{This behavior exactly matches that of our reference protocol described in the previous section, in which case when all the stations successfully transmit, a collision-free schedule is reached that is repeated in the following rounds.}
 
-To analyze this behavior, standard MC theory can be used to estimate the expected number of steps required to reach the solution. To illustrate the solution better, we will use the protocol described in the previous paragraph as the on-going example.
+We are interested in calculating the expected number of rounds required to reach a solution. To this end, we construct a Markov chain to model the behavior of the DSC solver and use the reference protocol to explain it in a more tangible manner.
+% can be used to estimate the expected number of steps required to reach the solution. To illustrate the solution better, we will use the protocol described in the previous paragraph as the on-going example.
+\Az{By pigeonhole principle, a solution exists only when $N\leq B$, i.e., when there are at least as many slots in a round as the total number of stations. Considering $N\leq B$} contending stations in the reference protocol, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
+The system is in state $S_d$ if exactly $d$ stations ($0 \leq d \leq N$) were successful in the previous round and therefore, will deterministically choose their transmission slot in the current round.
+From the constraint satisfaction problem perspective, this is equivalent to saying that there are exactly $d$ variables that were not involved in any constraint that was not satisfied in the previous round.
 
-For this contention protocol, considering that we have $N$ contending stations, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
-The system is in state $S_d$ if exactly $d$ stations ($0 \leq d \leq N$) will deterministically chose their transmission slot in the next round.
-From the constraint satisfaction problem perspective, this is equivalent to saying that there are $d$ variables that are not involved in constraints that are not satisfied.
-We are interested in the computation of the transition probabilities from one state $S_d$ to another state $S_\delta$, $0 \leq \delta \leq N$.
-We formalize this transition probability in the following definition.
+We are interested in the computation of the transition probability, $p_{d,\delta}^{B,N}$ , from one state $S_d$ to another state $S_\delta$, $0 \leq \delta \leq N$. In other words, $p_{d,\delta}^{B,N}$ is the probability of obtaining $\delta$ successful transmissions given $N$ stations and $B$ slots when $d$ of the stations use a deterministically chosen slot while the remaining $N-d$ stations transmit in a randomly chosen slot.
 
+\AzDel{We formalize this transition probability in the following definition.
 \begin{definition}
-For given values of $B$ and $N$, let us define $\psi_{d,\delta}^{B,N}$ as the transition probability from $S_d$ to $S_\delta$. 
-\end{definition}
+For given values of $B$ and $N$, let us define $p_{d,\delta}^{B,N}$ as the transition probability from $S_d$ to $S_\delta$.
+\end{definition}}
 
-This $\psi_{d,\delta}^{B,N}$ is the probability of obtaining $\delta$ successful transmissions given $N$ stations and $B$ slots when $d$ of the stations use a deterministically chosen slot while the remaining $N-d$ stations transmit in a randomly chosen slot.
+\AzCom{Why suddenly have a formal definition for only this variable?!}
 
-\begin{remark}
-The considered MC is an absorbing MC, as $\psi_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$.
-\end{remark}
 
-Once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
-Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $\psi_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
+\AzCom{Why separate this in the form of a remark?}
 
-Later in the article we will provide a formula to compute $\psi_{d,\delta}^{B,N}$.
-As first step, we analyze the simpler case in which $d=0$, which means that all the stations are randomly choosing their transmission slot. 
-This particular case is considered in Proposition \ref{pro:zero_case}.
+\AzCom{Why not draw the MC?}
+Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
+Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
-\begin{proposition}
-\label{pro:zero_case}
-The probability $\psi^{B,N}_{d,\delta}$ in the particular case when $d=0$ is 
-\setlength{\arraycolsep}{0.0em}
-\begin{eqnarray}
-\psi^{B,N}_{0,\delta} & {}={} &\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
-&&{+}\:(-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)!B^N}.
-\label{eq:psi_zero}
-\end{eqnarray}
-\end{proposition}
 
-\begin{proof}
-We are considering transitions from the state $S_0$ in which all the stations behave randomly to the other states. 
-Our aim is to compute the transition probabilities from $S_0$ to another state $S_\delta$, $0\leq \delta \leq N$, which is the probability that exactly $\delta$ stations successfully transmit.
-Some intermediate steps are necessary to compute the transition probabilities.
-
-We will define a set of $N$ events which represent the success of each of the $N$ stations and then we consider intersections among these events.
-As an example, to compute the transition from $S_0$ to $S_1$ we need to compute the probability that exactly one of the stations successfully transmits.
-This is a counting problem in which we need to count all the cases in which exactly one of the stations successfully transmit.
-We will use a theorem that addresses this specific problem as we detail in the Appendix.
-
-We number the stations from $1$ to $N$ for convenience, and we define $A_i$, ($i=1,\cdots,N$) the event that station $i$ succeeds and $\mathbf{A}=\{A_i:i=1,\dots,N\}$ the collection of these events.
-Notice that these events are partially overlapping, since it is possible that more than one station successfully transmits.
-
-We derive the probability of the event $A_i$ ($i=1\dots N$) as follows:
-the probability that a tagged stations succeeds is simply the probability that the remaining $N-1$ stations choose a different slot from the tagged station.
-As there are a total of $B-1$ of such slots, the probability that all $N-1$ stations choose among those $B-1$ slots out of the total $B$ slots is given by
+\Az{
+\subsection{Calculating the Transition Probabilities}
+To calculate the transition probabilities, we number the stations from $1$ to $N$ for convenience and define $A_i$ to be the event that station $i$ succeeds, and the set $\mathbf{A}=\{A_i\}_{i=1}^{N}$ to be the collection of all such events.
+These events are partially overlapping since more than one station may successfully transmit. For a given $d$, the transition probability $p_{d,\delta}^{B,N}$ is the probability that exactly $\delta$ out of the $N$ events in $\Abf$ happen. As mentioned before, when $d = N$, the system is in the absorbing state and $p_{d,\delta}^{B,N} = 1$ when $\delta = d$, and it is zero otherwise. When $d<N$, this probability can be calculated applying a generalized version of the inclusion-exclusion principle (see, e.g., the theorem in Sec. IV.3 of \cite{feller1968ipt}) as follows:
 \begin{equation}
-P(A_i)=\left(\frac{B-1}{B} \right)^{N-1}.
+\label{eq:Pij}
+p^{B,N}_{d,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(j),
 \end{equation}
-
-In the following, we will derive the probability that a selection of $j$ tagged stations succeeds.
-Let $\mathbf{A}^j$ be a set of $j$ ($j\leq N$) events in $\mathbf{A}$, that is $\mathbf{A}^j \subseteq \mathbf{A}, |\mathbf{A}^j|=j$.
-Without loss of generality, and to clarify the explanation, we take the ordered list of the tagged stations and assume that they choose, one by one, from 1 to $j$, the slot in which they transmit. 
-The first tagged station chooses any slot.
-The second station chooses any slot different from the one chosen by the first one with probability $(B-1)/B$. 
-In general, the $l$-th ($1 \leq l \leq j$) tagged station chooses one of the remaining slots with probability $(B-(l-1))/B$.
-Finally, we need that the remaining $N-j$ non tagged stations (if any) choose the slots that are not occupied by the tagged stations, which occurs with probability $\left( \frac{B-j}{B}\right)^{N-j}$.
-
-Summing up, for $1 \leq j \leq N-1$ the probability that all the $j$ tagged stations successfully transmit is given by
+where $S(j)$ is given by
 \begin{equation}
-\label{eq:prob_j_sta_transmit}
-P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j},
+\label{eq:S_j_def}
+S(j) = \sum_{\forall \Abf^{j} \subseteq \Abf} \pr{\bigcap_{A_i \in \Abf^{j}} A_i}.
 \end{equation}
-where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$ and $j=1\dots N-1$.
+Here $\Abf^{j}$ denotes a subset of $\Abf$ that has exactly $j$ elements, i.e., $|\mathbf{A}^{j}|=j$. Therefore, $\pr{\bigcap_{A_i \in \Abf^{j}} A_i}$ is the probability that all the $j$ stations represented in $\Abf^{j}$  successfully transmit. Note that $S(j)$ is a sum of probabilities, but it is not itself a probability. An intuitive explanation of (\ref{eq:Pij}) is presented in Appendix \ref{app:incl-excl-thm}.
 
-Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
-\begin{equation}
-\label{eq:PA}
-P\left( A_\cap \right) = \frac{B! (B-j)^{N-j}}{(B-j)! B^N},
-\quad j=1\dots N-1.
+% denoted hereafter by $P(\Abf^j_{\cap})$
+For a given set of $j$ tagged stations in $\Abf^{j}$, the probability $\pr{\bigcap_{A_i \in \Abf^{j}} A_i}$ depends on $k$, the number of deterministic stations within the $j$ tagged stations. The $j$ tagged stations succeed if the $j-k$ random stations among them choose unoccupied slots, and the remaining $N-d-(j-k)$ untagged random stations choose slots that are different from the ones selected by the $j$ tagged stations. The first event occurs with probability $$\binom{B-d}{j-k} \frac{(j-k)!}{B^{j-k}},$$ and the second with probability $$\left(\frac{B-j}{B} \right)^{N-d-(j-k)}.$$
+When $j=N$, we have $k=d$, and therefore, there are no untagged random stations, hence the second probability is 1. Consequently, the probability that all of the $j$ stations of $\Abf^{j}$ succeed, given that $k$ of them are deterministic, after some simplification is
+\begin{align}
+\label{eq:pAkj}
+&\pr{\bigcap_{A_i \in \Abf^{j}} A_i} \\
+&~~~~~~~~= \left \{ \begin{array}{lr}
+    \displaystyle \frac{(B-d)!(B-j)^{N-d-(j-k)}}{\left(B-d-(j-k)\right)!~B^{N-d}}, & j < N \\&\\
+    \displaystyle \frac{(B-d)!}{(B-N)!~B^{N-d}}, & j = N
+\end{array}
+\right. \nonumber 
+\end{align}
+
+For any given $j$, there are $\binom{d}{k} \binom{N-d}{j-k}$ sets $\Abf^{j}$ with $k$ deterministic stations. Furthermore, the number of deterministic stations, $k$, among the $j$ tagged stations is bounded by
+\begin{align}
+\label{eq:k_bound}
+\max(0,j+d-N) \leq k \leq \min(d,j),
+\end{align}
+since in a set of $j$ nodes, there cannot be more deterministic stations than the total number of deterministic stations ($k \leq d$), or more random stations than the than the total number of random stations ($j-k \leq N-d$). 
+
+
+Using (\ref{eq:S_j_def}), (\ref{eq:pAkj}), and (\ref{eq:k_bound}), $S(j)$ can be calculated as
+\begin{align}
+\label{eq:S_j}
+S(j) = &\sum_{k=\max(0,j+d-N)}^{\min(d,j)}   \binom{d}{k} \binom{N-d}{j-k}\\
+ & ~~~~~~~~~~~~\times \frac{(B-d)!(B-j)^{N-d-(j-k)}}{\left(B-d-(j-k)\right)!~B^{N-d}}, ~~~ j < N \nonumber 
+\end{align}
+and for $j=N$,
+\begin{align}
+\label{eq:S_N}
+S(N) = \frac{(B-d)!}{(B-N)!~B^{N-d}}.
+\end{align}
+Finally, the transition probabilities when $d<N$ can be calculated by replacing $S(j)$ in (\ref{eq:Pij}).
+
+
+\subsection{Calculating the Number of Steps until Absorption}
+
+To compute the expected number of rounds needed for the solver to reach a solution, we calculate the expected number of transitions that the MC takes to reach the absorbing state $S_N$ (see, e.g., \cite{grinstead1997ip} for the theory behind this calculation).
+
+Let $\Pbf^{B,N}$ be the transition probability matrix of the MC. This matrix is a square matrix of size $N+1$. If we number the rows and columns of $\Pbf^{B,N}$ starting with zero, the element in row $d$ and column $\delta$ is simply $\left[\Pbf^{B,N}\right]_{d,\delta} = p^{B,N}_{d,\delta}$ as in (\ref{eq:Pij}). In this matrix, rows $0$ to $N-1$ represent transitions from the transient states and row $N$ the transitions from the absorbing state. Therefore, $\Pbf^{B,N}$ has the following general form:
+\begin{equation} \label{Eq:Pmat_form}
+%\offinterlineskip
+\Pbf^{B,N} \;= \bordermatrix{
+                       &\hbox{TR}  &\omit\hfil &\hbox{ABS}\cr
+    \hbox{TR}\bigstrut &\mathbf{Q}_{(N \times N)} &\srule     &\mathbf{c}_{(N \times 1)} \cr
+\middlehrule{1}{1}
+    \hbox{ABS}\bigstrut&\mathbf{0}_{(1 \times N)} &\srule & 1}
 \end{equation}
+where $\mathbf{Q}$ is a matrix containing the first $N$ rows and columns of $\Pbf^{B,N}$, form which we calculate the fundamental matrix of the absorbing MC as $\mathbf{N}= (\mathbf{I}_{N \times N}-\mathbf{Q})^{-1}$, where $\mathbf{I}_{N \times N}$ is the $N \times N$ identity matrix.
+The expected number of steps to absorption, if the system starts in state $S_0$, is the sum of all the elements in the first row of $\mathbf{N}$.
+}
 
-Now, let us define $S(0,j)$ as the sum of the probabilities of occurrence of all the $\binom{N}{j}$ subsets $\mathbf{A}^j$ of size $|\mathbf{A}^j|=j$. For $j < N$ it is, 
-
-\begin{eqnarray}
-\label{eq:S0j}
-S(0,j) & {}={}  & \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) \\
-&{}={}& \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N},
-\quad j=1 \dots N-1. \nonumber
-\end{eqnarray}
-
-The expressions for (\ref{eq:PA}) and (\ref{eq:S0j}) in the case that all the stations succeed ($j=N$) are:
-\begin{equation}
-P\left( \bigcap_{ A_i \in \mathbf{A}^N } A_i \right) = \frac{B!}{(B-N)! B^N}
-,
-\end{equation}
-
-and
-\begin{eqnarray}
-S(0,N) &{}={}& \sum_{\scriptstyle \mathbf{A}^N\subseteq\mathbf{A}} P\biggl(\bigcap_{A_i\in \mathbf{A}^N} A_i \biggr) \nonumber\\
-&{}={}& \frac{B!}{(B-N)! B^N}.
-\end{eqnarray}
-
-
-
-Finally, we will derive the value of $\psi_{0,n}^{B,N}$ applying the theorem in Sec. IV.3 of \cite{feller1968ipt} as exemplified in the Appendix.
-The result is:
-
-\begin{eqnarray}
-\psi^{B,N}_{0,\delta} &{}={}& \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j) \nonumber\\
-&{}={}& \sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
-& & + (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
-\label{eq:psi_zero}
-\end{eqnarray}
-
-
-\end{proof}
-
-\begin{proposition}
-\label{pro:general_case}
-The probability $\psi^{B,N}_{d,\delta}$ is 
-\begin{eqnarray}
-\psi^{B,N}_{d,\delta} & {}={} & \sum_{j=\delta}^{N-1}  (-1)^{j+\delta} \binom{j}{\delta}  
-\sum_{i=max(0,j+d-N)}^{min(d,j)} \nonumber\\
-& & \binom{d}{i} \binom{N-d}{j-i} 
-\frac{(B-d)! (B-j)^{N-d-(j-i)}}{(B-d-(j-i))! B^{N-d}} 
-\nonumber\\
-& & + (-1)^{N+\delta} \binom{N}{\delta} \frac{(B-d)!}{(B-N)!B^{N-d}}
-\label{eq:psi}
-\end{eqnarray}
-\end{proposition}
-
-\begin{proof}
-We will use a similar notation to the one used for the proof of Proposition~\ref{pro:zero_case}.
-For this general case, we assume that there are $d$ ($0 \leq d \leq N$) stations that are using a deterministic backoff.
-We define $A_i$ ($i=1\dots N$) the event that station $A_i$ succeeds and $\mathbf{A}=\{A_i:i=1. \dots, N \}$ the collection of all these events.
-
-In the following, we will derive the probability of success $A_i$ ($i=1,\dots ,N$). There are two cases to consider: \emph{c.1} the success probability for a station that has used deterministic backoff and \emph{c.2} the success probability for a station that behaves randomly.
-
-\begin{itemize}
-\item \emph{c.1} The probability that a station that is using a deterministic backoff succeeds is simply the probability that the $N-d$ random stations choose a different slot from the deterministic station under consideration, which is
-\begin{equation}
-\label{eq:success_deterministic}
-\left( \frac{B-1}{B} \right)^{N-d}.
-\end{equation}
-\item \emph{c.2} The probability that one of the random stations succeeds is the probability that this station chooses an empty slot multiplied by the probability that the remaining $N-d$ random stations choose a different slot, which is
-\begin{equation}
-\label{eq:success_random}
-\frac{B-d}{B} \cdot \frac{(B-1)^{N-d-1}}{B^{N-d}}
-\quad
-d=0 \dots N-1
-\end{equation}
-Note that since in this case we are considering the probability that a random station succeeds, it is implicit that there is at least one random station and therefore $d$ is smaller than $N$.
-\end{itemize}
-
-In the following, we will derive the probability that a selection of tagged station succeeds.
-Let $\mathbf{A}^j$ be a set of $j$ events in $\mathbf{A}$, that is, $\mathbf{A}^j \subseteq \mathbf{A}$ and $|\mathbf{A}|=j$.
-Let us define $S(d,j)$ as the sum of the probabilities of occurrence of all of the subsets $A^j$ of size $|\mathbf{A}^j|=j$.
-
-For $j=1$ we are considering subsets of size 1.
-There are $N$ of such subsets.
-$d$ of them contain a deterministic station while the remaining $N-d$ contain a random station.
-Using (\ref{eq:success_deterministic}) and (\ref{eq:success_random}) we derive $S(d,1)$:
-\begin{equation}
-S(d,1)=d \left( \frac{B-1}{B} \right)^{N-d} + (N-d)\cdot \frac{B-1}{B}\cdot \frac{(B-1)^{N-d-1}}{B^{N-d}}.
-\end{equation}
-
-The right hand side summand is equal to zero when $d=N$.
-
-In order to compute $S(d,j)$ for any value of $j$, $0 \leq j \leq N$, we need to consider all the possible subsets $\mathbf{A}^j$ with $j$ stations, and for each one compute the probability that all of the stations in the subset succeed.
-For convenience, we say that a subset succeeds when all the stations in the subset succeed.
-As the success probability of the stations is different for case \emph{c.1} and case \emph{c.2}, subsets of the same size can have different success probabilities depending on the number of deterministic and random stations that is considered in the subset.
-It is necessary to take into account not only the size of the subset, but also the number of deterministic stations considered in each subset.
-We will capture this number of deterministic stations in a new upper index.
-
-Let us consider a generic subset $\mathbf{A}^{k,j}$ of $j$ stations, $|\mathbf{A}^{k,j}|=j$.
-Out of the $j$ stations, there are $k$ deterministic stations and $j-k$ random stations.
-As we are assuming that there are $d$ deterministic stations out of the total $N$ stations in the system, the following constraints must be satisfied:
-\begin{equation}
-0 \leq k \leq d,
-\end{equation}
-\begin{equation}
-0 \leq j-k \leq N -d.
-\end{equation}
-
-And, consequently,
-\begin{equation}
-\label{eq:ineq1}
- k \leq j,
-\end{equation}
-\begin{equation}
-\label{eq:ineq2}
- j-N+d \leq k.
-\end{equation}
-
-From (\ref{eq:ineq1}) and (\ref{eq:ineq2}) the following bounds are obtained for $k$:
-\begin{equation}
-\label{eq:bounds}
-max(0,j+d-N) \leq k \leq min(d,j).
-\end{equation}
-
-In the following, we will derive the probability that a set of $\mathbf{A}^{k,j}$ tagged stations succeeds.
-The probability that $k$ out of the total $d$ deterministic stations and $j-k$ out of the total $N-d$ random stations succeed is the probability that the $j-k$ stations choose unoccupied slots and the remaining $N-d-(j-k)$random stations choose slots that are different from the $j$ successful stations.
-The first part occurs with probability $\frac{(B-d)!}{\left(B-d-(j-k) \right)!B^{j-k}}$  , and the second with probability $\left(\frac{B-j}{B} \right)^{N-d-(j-k)}$.
-Consequently, the probability that all of the $j$ stations of $\mathbf{A}^{j,k}$ succeed is given by
-\begin{equation}
-\label{eq:pakj}
-P(\mathbf{A}^{k,j}) 
-= \frac{(B-d)!\left( \frac{B-j}{B} \right)^{N-d-(j-k)}}{(B-d-(j-k))!B^{j-k}}
-\end{equation}
-where $j=0\dots N-1$.
-The particular case $j=N$ implies that $k=d$.
-Consequently,
-
-\begin{equation}
-\label{eq:padN}
-P(\mathbf{A}^{d,N})=\frac{(B-d)!}{(B-N)!B^{N-d}},
-\end{equation}
-
-Combining (\ref{eq:bounds}), (\ref{eq:pakj}) and (\ref{eq:padN}) we obtain, for $j=1 \dots N-1$,
-\begin{eqnarray}
-\label{eq:sdj}
-S(d,j) & {}={} & \sum_{k=max(0,j+d-N)}^{min(d,j)} \binom{d}{k} \binom{N-d}{j-k} \nonumber\\
-&& \frac{(B-d)!\left(\frac{B-j}{B} \right)^{N-d-(j-k)}}{\left(B-d-(j-k)\right)!B^{j-k}} 
-\end{eqnarray}
-
-and
-
-\begin{equation}
-\label{eq:sdN}
-S(d,N)= \frac{(B-d)!}{(B-N)!B^{j-d}}.
-\end{equation}
-
-Note that for $d=0$ we obtain the value $S(0,j)$ introduced in Proposition \ref{pro:zero_case}, where all the stations randomly selected their transmission slot.
-
-We will use the theorem in Sec. IV.3 of \cite{feller1968ipt} which states that
-\begin{equation}
-\label{eq:theorem}
-\psi^{B,N}_{d,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(d,j).
-\end{equation}
-
-The result follows from substituting (\ref{eq:sdj}) and (\ref{eq:sdN}) in (\ref{eq:theorem}).
-
-\end{proof}
+% Later in the article we will provide a general formula to compute $\psi_{d,\delta}^{B,N}$.
+% As a first step, however, we analyze the simpler case in which $d=0$, which means that all the stations are randomly choosing their transmission slot.
+% This particular case is considered in Proposition \ref{pro:zero_case}.
+% 
+% \begin{proposition}
+% \label{pro:zero_case}
+% The probability $\psi^{B,N}_{d,\delta}$ in the particular case when $d=0$ is
+% \setlength{\arraycolsep}{0.0em}
+% \begin{eqnarray}
+% \psi^{B,N}_{0,\delta} & {}={} &\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
+% &&{+}\:(-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)!B^N}.
+% \label{eq:psi_zero}
+% \end{eqnarray}
+% \end{proposition}
+% 
+% \begin{proof}
+% We are considering transitions from the state $S_0$ in which all the stations behave randomly to the other states.
+% Our aim is to compute the transition probabilities from $S_0$ to another state $S_\delta$, $0\leq \delta \leq N$, which is the probability that exactly $\delta$ stations successfully transmit.
+% Some intermediate steps are necessary to compute the transition probabilities.
+% 
+% We will define a set of $N$ events which represent the success of each of the $N$ stations and then we consider intersections among these events.
+% As an example, to compute the transition from $S_0$ to $S_1$ we need to compute the probability that exactly one of the stations successfully transmits.
+% This is a counting problem in which we need to count all the cases in which exactly one of the stations successfully transmit.
+% We will use a theorem that addresses this specific problem as we detail in the Appendix.
+% 
+% We number the stations from $1$ to $N$ for convenience, and we define $A_i$, ($i=1,\cdots,N$) the event that station $i$ succeeds and $\mathbf{A}=\{A_i:i=1,\dots,N\}$ the collection of these events.
+% Notice that these events are partially overlapping, since it is possible that more than one station successfully transmits.
+% 
+% We derive the probability of the event $A_i$ ($i=1\dots N$) as follows:
+% the probability that a tagged stations succeeds is simply the probability that the remaining $N-1$ stations choose a different slot from the tagged station.
+% As there are a total of $B-1$ of such slots, the probability that all $N-1$ stations choose among those $B-1$ slots out of the total $B$ slots is given by
+% \begin{equation}
+% P(A_i)=\left(\frac{B-1}{B} \right)^{N-1}.
+% \end{equation}
+% 
+% In the following, we will derive the probability that a selection of $j$ tagged stations succeeds.
+% Let $\mathbf{A}^j$ be a set of $j$ ($j\leq N$) events in $\mathbf{A}$, that is $\mathbf{A}^j \subseteq \mathbf{A}, |\mathbf{A}^j|=j$.
+% Without loss of generality, and to clarify the explanation, we take the ordered list of the tagged stations and assume that they choose, one by one, from 1 to $j$, the slot in which they transmit.
+% The first tagged station chooses any slot.
+% The second station chooses any slot different from the one chosen by the first one with probability $(B-1)/B$.
+% In general, the $l$-th ($1 \leq l \leq j$) tagged station chooses one of the remaining slots with probability $(B-(l-1))/B$.
+% Finally, we need that the remaining $N-j$ non tagged stations (if any) choose the slots that are not occupied by the tagged stations, which occurs with probability $\left( \frac{B-j}{B}\right)^{N-j}$.
+% 
+% Summing up, for $1 \leq j \leq N-1$ the probability that all the $j$ tagged stations successfully transmit is given by
+% \begin{equation}
+% \label{eq:prob_j_sta_transmit}
+% P\left( A_\cap \right) = \frac{B}{B} \cdot \frac{B-1}{B} \cdot \dots \cdot \frac{B-(j-1)}{B} \cdot \left( \frac{B-j}{B} \right)^{N-j},
+% \end{equation}
+% where $A_\cap=\bigcap_{ A_i \in \mathbf{A}^j}A_i$ and $j=1\dots N-1$.
+% 
+% Rewriting (\ref{eq:prob_j_sta_transmit}), we obtain
+% \begin{equation}
+% \label{eq:PA}
+% P\left( A_\cap \right) = \frac{B! (B-j)^{N-j}}{(B-j)! B^N},
+% \quad j=1\dots N-1.
+% \end{equation}
+% 
+% Now, let us define $S(0,j)$ as the sum of the probabilities of occurrence of all the $\binom{N}{j}$ subsets $\mathbf{A}^j$ of size $|\mathbf{A}^j|=j$. For $j < N$ it is,
+% 
+% \begin{eqnarray}
+% \label{eq:S0j}
+% S(0,j) & {}={}  & \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} P\left( A_\cap \right) \\
+% &{}={}& \sum_{\scriptstyle \mathbf{A}^j\subseteq\mathbf{A}} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N},
+% \quad j=1 \dots N-1. \nonumber
+% \end{eqnarray}
+% 
+% The expressions for (\ref{eq:PA}) and (\ref{eq:S0j}) in the case that all the stations succeed ($j=N$) are:
+% \begin{equation}
+% P\left( \bigcap_{ A_i \in \mathbf{A}^N } A_i \right) = \frac{B!}{(B-N)! B^N}
+% ,
+% \end{equation}
+% 
+% and
+% \begin{eqnarray}
+% S(0,N) &{}={}& \sum_{\scriptstyle \mathbf{A}^N\subseteq\mathbf{A}} P\biggl(\bigcap_{A_i\in \mathbf{A}^N} A_i \biggr) \nonumber\\
+% &{}={}& \frac{B!}{(B-N)! B^N}.
+% \end{eqnarray}
+% 
+% 
+% 
+% Finally, we will derive the value of $\psi_{0,n}^{B,N}$ applying the theorem in Sec. IV.3 of \cite{feller1968ipt} as exemplified in the Appendix.
+% The result is:
+% 
+% \begin{eqnarray}
+% \psi^{B,N}_{0,\delta} &{}={}& \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j) \nonumber\\
+% &{}={}& \sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
+% & & + (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
+% \label{eq:psi_zero}
+% \end{eqnarray}
+% 
+% 
+% \end{proof}
+% 
+% \begin{proposition}
+% \label{pro:general_case}
+% The probability $\psi^{B,N}_{d,\delta}$ is
+% \begin{eqnarray}
+% \psi^{B,N}_{d,\delta} & {}={} & \sum_{j=\delta}^{N-1}  (-1)^{j+\delta} \binom{j}{\delta}
+% \sum_{i=max(0,j+d-N)}^{min(d,j)} \nonumber\\
+% & & \binom{d}{i} \binom{N-d}{j-i}
+% \frac{(B-d)! (B-j)^{N-d-(j-i)}}{(B-d-(j-i))! B^{N-d}}
+% \nonumber\\
+% & & + (-1)^{N+\delta} \binom{N}{\delta} \frac{(B-d)!}{(B-N)!B^{N-d}}
+% \label{eq:psi}
+% \end{eqnarray}
+% \end{proposition}
+% 
+% \begin{proof}
+% We will use a similar notation to the one used for the proof of Proposition~\ref{pro:zero_case}.
+% For this general case, we assume that there are $d$ ($0 \leq d \leq N$) stations that are using a deterministic backoff.
+% We define $A_i$ ($i=1\dots N$) the event that station $A_i$ succeeds and $\mathbf{A}=\{A_i:i=1. \dots, N \}$ the collection of all these events.
+% 
+% In the following, we will derive the probability of success $A_i$ ($i=1,\dots ,N$). There are two cases to consider: \emph{c.1} the success probability for a station that has used deterministic backoff and \emph{c.2} the success probability for a station that behaves randomly.
+% 
+% \begin{itemize}
+% \item \emph{c.1} The probability that a station that is using a deterministic backoff succeeds is simply the probability that the $N-d$ random stations choose a different slot from the deterministic station under consideration, which is
+% \begin{equation}
+% \label{eq:success_deterministic}
+% \left( \frac{B-1}{B} \right)^{N-d}.
+% \end{equation}
+% \item \emph{c.2} The probability that one of the random stations succeeds is the probability that this station chooses an empty slot multiplied by the probability that the remaining $N-d$ random stations choose a different slot, which is
+% \begin{equation}
+% \label{eq:success_random}
+% \frac{B-d}{B} \cdot \frac{(B-1)^{N-d-1}}{B^{N-d}}
+% \quad
+% d=0 \dots N-1
+% \end{equation}
+% Note that since in this case we are considering the probability that a random station succeeds, it is implicit that there is at least one random station and therefore $d$ is smaller than $N$.
+% \end{itemize}
+% 
+% In the following, we will derive the probability that a selection of tagged station succeeds.
+% Let $\mathbf{A}^j$ be a set of $j$ events in $\mathbf{A}$, that is, $\mathbf{A}^j \subseteq \mathbf{A}$ and $|\mathbf{A}|=j$.
+% Let us define $S(d,j)$ as the sum of the probabilities of occurrence of all of the subsets $A^j$ of size $|\mathbf{A}^j|=j$.
+% 
+% For $j=1$ we are considering subsets of size 1.
+% There are $N$ of such subsets.
+% $d$ of them contain a deterministic station while the remaining $N-d$ contain a random station.
+% Using (\ref{eq:success_deterministic}) and (\ref{eq:success_random}) we derive $S(d,1)$:
+% \begin{equation}
+% S(d,1)=d \left( \frac{B-1}{B} \right)^{N-d} + (N-d)\cdot \frac{B-1}{B}\cdot \frac{(B-1)^{N-d-1}}{B^{N-d}}.
+% \end{equation}
+% 
+% The right hand side summand is equal to zero when $d=N$.
+% 
+% In order to compute $S(d,j)$ for any value of $j$, $0 \leq j \leq N$, we need to consider all the possible subsets $\mathbf{A}^j$ with $j$ stations, and for each one compute the probability that all of the stations in the subset succeed.
+% For convenience, we say that a subset succeeds when all the stations in the subset succeed.
+% As the success probability of the stations is different for case \emph{c.1} and case \emph{c.2}, subsets of the same size can have different success probabilities depending on the number of deterministic and random stations that is considered in the subset.
+% It is necessary to take into account not only the size of the subset, but also the number of deterministic stations considered in each subset.
+% We will capture this number of deterministic stations in a new upper index.
+% 
+% Let us consider a generic subset $\mathbf{A}^{k,j}$ of $j$ stations, $|\mathbf{A}^{k,j}|=j$.
+% Out of the $j$ stations, there are $k$ deterministic stations and $j-k$ random stations.
+% As we are assuming that there are $d$ deterministic stations out of the total $N$ stations in the system, the following constraints must be satisfied:
+% \begin{equation}
+% 0 \leq k \leq d,
+% \end{equation}
+% \begin{equation}
+% 0 \leq j-k \leq N -d.
+% \end{equation}
+% 
+% And, consequently,
+% \begin{equation}
+% \label{eq:ineq1}
+%  k \leq j,
+% \end{equation}
+% \begin{equation}
+% \label{eq:ineq2}
+%  j-N+d \leq k.
+% \end{equation}
+% 
+% From (\ref{eq:ineq1}) and (\ref{eq:ineq2}) the following bounds are obtained for $k$:
+% \begin{equation}
+% \label{eq:bounds}
+% max(0,j+d-N) \leq k \leq min(d,j).
+% \end{equation}
+% 
+% In the following, we will derive the probability that a set of $\mathbf{A}^{k,j}$ tagged stations succeeds.
+% The probability that $k$ out of the total $d$ deterministic stations and $j-k$ out of the total $N-d$ random stations succeed is the probability that the $j-k$ stations choose unoccupied slots and the remaining $N-d-(j-k)$random stations choose slots that are different from the $j$ successful stations.
+% The first part occurs with probability $\frac{(B-d)!}{\left(B-d-(j-k) \right)!B^{j-k}}$  , and the second with probability $\left(\frac{B-j}{B} \right)^{N-d-(j-k)}$.
+% Consequently, the probability that all of the $j$ stations of $\mathbf{A}^{j,k}$ succeed is given by
+% \begin{equation}
+% \label{eq:pakj}
+% P(\mathbf{A}^{j})
+% = \frac{(B-d)!\left( \frac{B-j}{B} \right)^{N-d-(j-k)}}{(B-d-(j-k))!B^{j-k}}
+% \end{equation}
+% where $j=0\dots N-1$.
+% The particular case $j=N$ implies that $k=d$.
+% Consequently,
+% 
+% \begin{equation}
+% \label{eq:padN}
+% P(\mathbf{A}^{d,N})=\frac{(B-d)!}{(B-N)!B^{N-d}},
+% \end{equation}
+% 
+% Combining (\ref{eq:bounds}), (\ref{eq:pakj}) and (\ref{eq:padN}) we obtain, for $j=1 \dots N-1$,
+% \begin{eqnarray}
+% \label{eq:sdj}
+% S(d,j) & {}={} & \sum_{k=max(0,j+d-N)}^{min(d,j)} \binom{d}{k} \binom{N-d}{j-k} \nonumber\\
+% && \frac{(B-d)!\left(\frac{B-j}{B} \right)^{N-d-(j-k)}}{\left(B-d-(j-k)\right)!B^{j-k}}
+% \end{eqnarray}
+% 
+% and
+% 
+% \begin{equation}
+% \label{eq:sdN}
+% S(d,N)= \frac{(B-d)!}{(B-N)!B^{j-d}}.
+% \end{equation}
+% 
+% Note that for $d=0$ we obtain the value $S(0,j)$ introduced in Proposition \ref{pro:zero_case}, where all the stations randomly selected their transmission slot.
+% 
+% We will use the theorem in Sec. IV.3 of \cite{feller1968ipt} which states that
+% \begin{equation}
+% \label{eq:theorem}
+% \psi^{B,N}_{d,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(d,j).
+% \end{equation}
+% 
+% The result follows from substituting (\ref{eq:sdj}) and (\ref{eq:sdN}) in (\ref{eq:theorem}).
+% 
+% \end{proof}
 
 \section{Numerical Results}
 \label{sec:numerical_results}
@@ -923,15 +1058,8 @@ The number of slots in each round is set to $B=8$ and $B=16$, and the number of 
 The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
 
 The first results are for an ideal channel that does not introduce errors.
-We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator in c.\footnote{The two simulators in C that we have used and the scripts in maxima to compute the expectations derived from the analytical model can be downloaded from www.jaumebarcelo.info/papers/barcelo-macom2012-sources.zip .} 
+We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator in c.\footnote{The two simulators in C that we have used and the scripts in maxima to compute the expectations derived from the analytical model can be downloaded from www.jaumebarcelo.info/papers/barcelo-macom2012-sources.zip .}
 The results are presented in Fig.~\ref{fig:convergence_avg}.
-
-To compute the expected value of the number of steps to absorption, it is necessary to follow the steps described in \cite{grinstead1997ip}.
-First we construct the matrix $\psi^{B,N}$ which is a square matrix of size $N+1$.
-If we number the rows and columns starting with zero, the element in row $d$ and column $\delta$ is simply $\left[\psi^{B,N}\right]_{d,\delta} = \psi^{B,N}_{d,\delta}$ as in  (\ref{eq:psi}).
-The first $N$ (from 0 to $N-1$) rows represent transitions from the transient states and the $N$-th row is the absorbing state.
-The $\mathbf{Q}$ matrix is constructed taking the first $N$ rows and columns of $\psi^{B,N}$ and the fundamental matrix of the absorbing MC is $\mathbf{N}= (\mathbf{I}-\mathbf{Q})^{-1}$, where $\mathbf{I}$ is the identity matrix.
-Then, the number of steps to absorption if the system starts in state $S_0$ is the first entry of a vector $\mathbf{t}$ computed as $\mathbf{t}=\mathbf{N}\mathbf{c}$, where $\mathbf{c}$ is a column vector of ones.
 
 To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
 These percentiles provide an idea of the distribution of the value of the number steps required to reach collision-free operation.
@@ -944,17 +1072,16 @@ These percentiles provide an idea of the distribution of the value of the number
 
 
 \subsection{Results in the presence of channel errors}
-So far we have not considered the possibility that the channel introduced errors. 
-In the case of channel error, a transmission will be unsuccessful even if it has not suffered a collision.
-An erroneous transmission has the same effect of a collision and the station that suffered a channel error will randomly select its next transmission slot.
+So far we have not considered the possibility that the channel introduced errors.
+In the case of channel error, a transmission may be unsuccessful even if it has not suffered a collision.
+An erroneous transmission has the same effect of a collided one and a station that suffers a channel error will randomly select a slot in the next transmission round.
 
-The probability of moving from the state $S_d$ to the state $S_\delta$ in the presence of a channel error probability $\epsilon$ is
+The probability of moving from the state $S_d$ to the state $S_\delta$ when a channel error happens with probability $\epsilon$ is
 \begin{equation}
 \label{eq:psiBNepsilon}
-\psi^{B,N,\epsilon}_{d,\delta}= \psi^{B,N}_{d,\delta} (1-\epsilon)^\delta + \sum_{i=\delta+1}^{N} \binom{i}{\delta} \epsilon^{i-\delta}(1-\epsilon)^\delta \psi^{B,N}_{d,i}.
+p^{B,N,\epsilon}_{d,\delta}= p^{B,N}_{d,\delta} (1-\epsilon)^\delta + \sum_{i=\delta+1}^{N} \binom{i}{\delta} \epsilon^{i-\delta}(1-\epsilon)^\delta p^{B,N}_{d,i}.
 \end{equation}
-
-The probability that there are exactly $\delta$ successful stations is the probability that there are $\delta$ stations that do not collide and none of them suffers a collision plus the probability that there are $i$ ($\delta < i \leq N$) stations that do not collide and exactly $i-\delta$ of those stations suffer a collision.
+In other words, the probability that there are exactly $\delta$ successful stations is the probability that there are $\delta$ stations that do not collide and none of them suffers a collision plus the probability that there are $i$ ($\delta < i \leq N$) stations that do not collide and exactly $i-\delta$ of those stations suffer a collision.
 Note that the resulting MC is no longer absorbing.
 In this case, to validate the expression in (\ref{eq:psiBNepsilon}) we compute the average number of successful transmissions in each step from the MC and compare it with averages obtained from a simulation of 10,000 rounds.
 The results for a channel error probability $\epsilon=0.1$, different numbers of slots ($B$) and different numbers of contenders ($N$) are presented in Fig.~\ref{fig:successful_tx_per_step}.
@@ -1001,7 +1128,8 @@ The presented results have been validated by means of simulation.
 
 
 \appendices
-\section{Proof of the First Zonklar Equation}
+\section{Generalized Inclusion Exclusion Illustration}
+\label{app:incl-excl-thm}
 Appendix one text goes here.
 
 % you can choose not to have a title for an appendix
@@ -1056,7 +1184,7 @@ The authors would like to thank...
 %\end{thebibliography}
 
 % biography section
-% 
+%
 % If you have an EPS/PDF photo (graphicx package needed) extra braces are
 % needed around the contents of the optional argument to biography to prevent
 % the LaTeX parser from getting confused when it sees the complicated
