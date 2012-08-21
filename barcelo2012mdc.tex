@@ -398,7 +398,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{On the Accommodation of a Large Number of Contenders in CSMA/ECA}
+\title{Modelling a Decentralized Constraint Satisfaction Solver}
 %
 %
 % author names and IEEE memberships
@@ -606,7 +606,7 @@ An attractive property of this decentralized solver is that it reaches the solut
 
 To illustrate this, we will briefly cover two examples. 
 First, the assignment of frequency channels to WLAN access point and, second, the assignment of time slots to contending wireless stations in a WLAN.
-The first is a set of WLAN access points, which need to select the channels they use in a distributed fashion. Since access points too close to each other may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem, with the set of different channels to choose from at each access point being the variable, the number of variables being the number of access points considered, and the clauses describing, for every pair of access points in interference range, whether they have selected the same channel or not.
+The first is a set of WLAN access points, which need to select the channels they use in a distributed fashion. Since access points too close to each other may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem, with the set of different channels to choose from at each access point being the possible values of the variable, the number of variables being the number of access points considered, and the clauses describing, for every pair of access points in interference range, whether they have selected the same channel or not.
 
 The second problem under consideration is the assignment of $N$ wireless stations to $B$ channel time slots.
 A solution to the problem is an assignment in which there is no slot containing more than one wireless stations.
@@ -651,7 +651,7 @@ The variant of the protocol that uses a deterministic backoff after successful t
 A more detailed explanation of CSMA/ECA can be found in, e.g., \cite{barcelo2008lba,barcelo2009tpc,he2009srb,fang2011dlm}.
 
 For this example, the values of the variables in the according DCS problem are the different slots to choose from, while the number of variables is the number of stations sharing the channel. The clauses are again evaluating, for each pair of variables, if they have the same value or not.
-This is equivalent to check if two stations have selected the same slot for transmission.
+This is equivalent to check if two stations have selected the same slot for transmission or not.
 
 For these problems, a DCS solver has been presented in \cite{duffy2011dcs}. The contribution of this paper is to present an analytical model based on a MC that describes the behavior of this solver in a specific case, as described in the next section.
 
@@ -769,14 +769,12 @@ S(0,N) &{}={}& \sum_{\scriptstyle \mathbf{A}^N\subseteq\mathbf{A}} P\biggl(\bigc
 Finally, we will derive the value of $\psi_{0,n}^{B,N}$ applying the theorem in Sec. IV.3 of \cite{feller1968ipt} as exemplified in the Appendix.
 The result is:
 
-\begin{equation}
-\begin{split}
-\psi^{B,N}_{0,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j)= \\
-\sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N}
-+ (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
-\end{split}
+\begin{eqnarray}
+\psi^{B,N}_{0,\delta} &{}={}& \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(0,j) \nonumber\\
+&{}={}& \sum_{j=\delta}^{N-1} (-1)^{j+\delta}\binom{j}{\delta} \binom{N}{j}\frac{B! (B-j)^{N-j}}{(B-j)! B^N} \nonumber\\
+& & + (-1)^{N+\delta}\binom{N}{\delta}\frac{B!}{(B-N)! B^N}.
 \label{eq:psi_zero}
-\end{equation}
+\end{eqnarray}
 
 
 \end{proof}
@@ -925,7 +923,7 @@ The number of slots in each round is set to $B=8$ and $B=16$, and the number of 
 The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
 
 The first results are for an ideal channel that does not introduce errors.
-We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator in c.\footnote{The two simulators in c that we have used and the scripts in maxima to compute the expectations derived from the analytical model can be downloaded from www.jaumebarcelo.info/papers/barcelo-macom2012-sources.zip .} 
+We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator in c.\footnote{The two simulators in C that we have used and the scripts in maxima to compute the expectations derived from the analytical model can be downloaded from www.jaumebarcelo.info/papers/barcelo-macom2012-sources.zip .} 
 The results are presented in Fig.~\ref{fig:convergence_avg}.
 
 To compute the expected value of the number of steps to absorption, it is necessary to follow the steps described in \cite{grinstead1997ip}.
