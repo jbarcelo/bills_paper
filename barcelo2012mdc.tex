@@ -1130,12 +1130,38 @@ The presented results have been validated by means of simulation.
 \appendices
 \section{Generalized Inclusion Exclusion Illustration}
 \label{app:incl-excl-thm}
-Appendix one text goes here.
+\label{app:theorem}
+The theorem we use is named ``The realization of $m$ among $N$ events'' and it is presented in \cite{feller1968ipt} in Sec. IV.3.
+Following our notation, we are interested in computing the probability that exactly $m=\delta$ among the $N$ stations succeed.
 
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
+\begin{figure}
+\psfrag{A1}[cc][cc]{$A_1$}
+\psfrag{A2}[cc][cc]{$A_2$}
+\psfrag{A3}[cc][cc]{$A_3$}
+\centering
+\includegraphics[height=3cm]{figures/counting}
+\caption{Illustration of the counting problem}
+\label{fig:counting}
+\end{figure}
+
+To illustrate the underlying idea we will use a simple example involving $N=3$ different stations choosing among $B=4$ different slots.
+We assume that the number of stations deterministically choosing its transmission slot is $d=0$ and we are interested in computing the probability that exactly $\delta=1$ station succeeds.
+
+There are a total of $B^N=4^3$ outcomes that are represented as black dots in Fig.~\ref{fig:counting}.
+Each outcome is equally likely with probability $1/64$.
+The figure also shows three events $A_1$, $A_2$ and $A_3$.
+The first event, $A_1$ represents the outcomes in which the first station succeeds.
+Similarly, the other two events, $A_2$ and $A_3$, represent the outcomes in which station 2 and 3 succeed, respectively.
+These sets are partially overlapping.
+Note also that it is impossible that two stations succeed while the third station collides.
+
+If we want to compute the probability that exactly one station succeeds, we have to count the outcomes that belong to either $A_1$, $A_2$ or $A_3$ and are not part of the intersections.
+This is $|A_1|+|A_2|+|A_3|-2(|A_1\cap A_2|+|A_1\cap A_3|+|A_2\cap A_3|)+3(|A_1\cap A_2\cap A_3|)$.
+In our paper we will use the intermediate values
+ $S(0,1)=P(A_1)+P(A_2)+P(A_3)$,
+ $S(0,2)=P(A_1\cap A_2)+P(A_1\cap A_3)+P(A_2\cap A_3)$, and $S(0,3)=P(A_1\cap A_2\cap A_3)$.
+ The probability that exactly one station succeeds is finally computed  as $S(0,1)-2S(0,2)+3S(0,3)$.
+
 
 
 % use section* for acknowledgement
