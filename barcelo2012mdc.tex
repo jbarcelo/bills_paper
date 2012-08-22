@@ -646,33 +646,24 @@ While there are solvers for this kind of problem, they are typically centralized
 
 \Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
 
-\AzDel{The analytical model we present in this paper describes what is referred to as a Decentralized Constraint Satisfaction (DCS) \Az{solver} \AzDel{problem}.}
 A DCS solver is presented in \cite{duffy2011dcs} that searches for a solution of the problem using an iterative approach. The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
 The solver uses two different parameters, $a$ and $b$, to adjust the learning process.
 An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
-%Here, the variables can be interpreted as the channel chosen by a device in a shared medium. This channel may for example be a frequency or a time slot. The clauses then evaluate if two or more stations chose the same channel (in which case, collisions occur), or all have selected their own channel (the desired situation).
 
-%No communication can occur between the endpoints trying to solve the Constraint Satisfaction Problem, since the problem is to establish a collision-free communication in the first place. Therefore, we are here considering a special case, namely a DCS problem. Essentially, this means that any device sharing the medium only can control one variable, namely its channel selection, and only has information about the clauses including this variable, namely whether a collision occurred or not.
-
-To illustrate how the constraint satisfaction problem maps to paractical scenarios, we will briefly cover two examples. First, the assignment of frequency channels to WLAN access points and, second, the assignment of time slots to contending wireless stations in a WLAN, which we will use as our reference scenario.
+To illustrate how the constraint satisfaction problem maps to practical scenarios, we will briefly cover two examples. First, the assignment of frequency channels to WLAN access points and, second, the assignment of time slots to contending wireless stations in a WLAN, which we will use as our reference scenario.
 The first example consists in a set of WLAN access points that need to select the channels they use in a distributed fashion. Since the access points that are close to one another may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem. Here variable $x_i$ indicates the channel for access point $i$, chosen from the set of available channels $\mathbf{B}$. There is one clause per every pair of access points in each other's interference range, indicating whether they have selected the same channel or not.
 
 \section{The Reference Scenario}
 
-The second example, and our reference scenario, is the distributed assignment of $N$ contending wireless stations to $B$ channel time slots. \Az{In each slot a single transmission can be completed and acknowledged.} 
+The second example, and our reference scenario, is the distributed assignment of $N$ contending wireless stations to $B$ channel time slots. 
+In each slot a single transmission can be completed and acknowledged. 
 From a station's perspective, there are two possible outcomes for every transmission.
-The station succeeds if no other station is assigned the same slot. \Az{A successful transmission is acknowledged within the same slot in which the transmission has taken place.}
-If at least one other station picks the same slot, all stations involved will suffer a collision, and the transmission is unsuccessful, \Az{in which case no acknowledgement will be received}.
+The station succeeds if no other station is assigned the same slot. 
+A successful transmission is acknowledged within the same slot in which the transmission has taken place.
+If at least one other station picks the same slot, all stations involved will suffer a collision, and the transmission is unsuccessful, in which case no acknowledgement will be received.
 
-% If two or more wireless stations are assigned to the same slot, a collision occurs and their packets are garbled. 
-% The stations that suffer a collision, are aware of this situation because they don't receive an acknowledgement for their transmitted packet.
 
-\Az{For this example, the variables $\{x_i\}_{i=1}^{N}$ in the corresponding constraint satisfaction problem are the slots chosen by the $N$ contending wireless stations from the set of available slots $\mathbf{B}$. Again, there is one clause per pair of variables evaluating if they have the same value or not. The clause will return 0 if the two participating stations have selected the same slot (i.e., collision) and returns 1 otherwise.}
-% This is equivalent to checking if two stations have selected the same slot for transmission or not.
-
-% For this example, the values of the variables in the corresponding DCS problem are the different slots to choose from, while the number of variables is the number of stations sharing the channel. The clauses are again evaluating, for each pair of variables, if they have the same value or not.
-% This is equivalent to check if two stations have selected the same slot for transmission or not.
-
+For this example, the variables $\{x_i\}_{i=1}^{N}$ in the corresponding constraint satisfaction problem are the slots chosen by the $N$ contending wireless stations from the set of available slots $\mathbf{B}$. Again, there is one clause per pair of variables evaluating if they have the same value or not. The clause will return 0 if the two participating stations have selected the same slot (i.e., collision) and returns 1 otherwise.
 
 \section{The Reference Protocol}
 
@@ -680,17 +671,6 @@ In this section, we describe a protocol that distributively solves the problem p
 
 The protocol works as follows. In the first round, each station randomly and independently picks one of the $B$ possible slots in the round. If the transmission is successful, the station will pick exactly the same slot in the next round. Otherwise, it will pick one of the $B$ slots in the next time randomly. This process repeats until all stations successfully transmit in the same round, from which point on, all the stations will transmit periodically and no collisions will occur. The operation of this protocol is illustrated in Fig.~\ref{fig:csma_eca_compact} for five consecutive rounds. In this example, a collision-free solution is reached in the fourth round, after which the same schedule can be repeated endlessly without further collisions.
 
-\AzDel{As a second example, we consider carrier-sense multiple-access with collision avoidance (CSMA/CA). Here, a contending station with a packet to transmit defers its transmission for a random number of slots if the (shared) channel is sensed busy.
-This protocol reduces the likelihood of collisions as a collision happens only when two or more contending stations select the same slot for transmission.
-The operation of the protocol is illustrated in Fig.~\ref{fig:csma_ca_compact}. \AzCom{The figure is not very clear to me for CSMA/CA. Do we really have to mention CSMA/CA anyway?}}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=2.5in]{figures/csma_ca_compact}
-  \caption{CSMA/CA contention}
-  \label{fig:csma_ca_compact}
-  The protocol executes in an iterative way, in several rounds.
-\end{figure}
 \begin{figure}
   \centering
   \includegraphics[width=2.5in]{figures/csma_eca_compact}
@@ -698,16 +678,11 @@ The operation of the protocol is illustrated in Fig.~\ref{fig:csma_ca_compact}. 
   \label{fig:csma_eca_compact}
 \end{figure}
 
-\AzDel{CSMA/CA can be improved if the participating stations defer the transmission for a deterministic backoff after successful transmissions.}
-
 This protocol is a simplified version of a variant of CSMA/CA, called CSMA with enhanced collision avoidance (CSMA/ECA). A detailed explanation of CSMA/ECA can be found in, e.g., \cite{barcelo2008lba,barcelo2009tpc,he2009srb,fang2011dlm}.
 
-
-\AzDel{For these problems, a DCS solver has been presented in \cite{duffy2011dcs}. The contribution of this paper is to present an analytical model based on a MC that describes the behavior of this solver in a specific case, as described in the next section.}
-
-\Az{The reference protocol can be viewed as a distributed solver for the corresponding constraint satisfaction problem defined in the previous section. In the first round, the variables $x_i$ are assigned a value in $\{1,\cdots, B \}$ randomly, with probability $1/B$. Then the constraints are evaluated.
+The reference protocol can be viewed as a distributed solver for the corresponding constraint satisfaction problem defined in the previous section. In the first round, the variables $x_i$ are assigned a value in $\{1,\cdots, B \}$ randomly, with probability $1/B$. Then the constraints are evaluated.
 Those variables that are involved in constraints that are not satisfied take a random value again in the next round, while the other variables keep the same value as in the previous round.
-When a solution is reached, all the variables keep the same value. This solver is, in fact, an instance of the parametrized solver proposed in \cite{duffy2011dcs} with the parameter values set to $a=b=1$.}
+When a solution is reached, all the variables keep the same value. This solver is, in fact, an instance of the parametrized solver proposed in \cite{duffy2011dcs} with the parameter values set to $a=b=1$.
 
 
 \section{The Markov Chain Model}
@@ -721,21 +696,11 @@ When a solution is reached, all the variables keep the same value. This solver i
 
 We are interested in calculating the expected number of rounds required to reach a solution. To this end, we construct a Markov chain to model the behavior of the DSC solver and use the reference protocol to explain it in a more tangible manner.
 % can be used to estimate the expected number of steps required to reach the solution. To illustrate the solution better, we will use the protocol described in the previous paragraph as the on-going example.
-\Az{By pigeonhole principle, a solution exists only when $N\leq B$, i.e., when there are at least as many slots in a round as the total number of stations. Considering $N\leq B$} contending stations in the reference protocol, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
+By pigeonhole principle, a solution exists only when $N\leq B$, i.e., when there are at least as many slots in a round as the total number of stations. Considering $N\leq B$ contending stations in the reference protocol, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
 The system is in state $S_d$ if exactly $d$ stations ($0 \leq d \leq N$) were successful in the previous round and therefore, will deterministically choose their transmission slot in the current round.
 From the constraint satisfaction problem perspective, this is equivalent to saying that there are exactly $d$ variables that were not involved in any constraint that was not satisfied in the previous round.
 
 We are interested in the computation of the transition probability, $p_{d,\delta}^{B,N}$ , from one state $S_d$ to another state $S_\delta$, $0 \leq \delta \leq N$. In other words, $p_{d,\delta}^{B,N}$ is the probability of obtaining $\delta$ successful transmissions given $N$ stations and $B$ slots when $d$ of the stations use a deterministically chosen slot while the remaining $N-d$ stations transmit in a randomly chosen slot.
-
-\AzDel{We formalize this transition probability in the following definition.
-\begin{definition}
-For given values of $B$ and $N$, let us define $p_{d,\delta}^{B,N}$ as the transition probability from $S_d$ to $S_\delta$.
-\end{definition}}
-
-\AzCom{Why suddenly have a formal definition for only this variable?!}
-
-
-\AzCom{Why separate this in the form of a remark?}
 
 \AzCom{Why not draw the MC?}
 Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
