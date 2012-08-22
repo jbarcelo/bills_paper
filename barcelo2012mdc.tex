@@ -707,7 +707,6 @@ Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when b
 Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
 
-\Az{
 \subsection{Calculating the Transition Probabilities}
 To calculate the transition probabilities, we number the stations from $1$ to $N$ for convenience and define $A_i$ to be the event that station $i$ succeeds, and the set $\mathbf{A}=\{A_i\}_{i=1}^{N}$ to be the collection of all such events.
 These events are partially overlapping since more than one station may successfully transmit. For a given $d$, the transition probability $p_{d,\delta}^{B,N}$ is the probability that exactly $\delta$ out of the $N$ events in $\Abf$ happen. As mentioned before, when $d = N$, the system is in the absorbing state and $p_{d,\delta}^{B,N} = 1$ when $\delta = d$, and it is zero otherwise. When $d<N$, this probability can be calculated applying a generalized version of the inclusion-exclusion principle (see, e.g., the theorem in Sec. IV.3 of \cite{feller1968ipt}) as follows:
@@ -772,7 +771,6 @@ Let $\Pbf^{B,N}$ be the transition probability matrix of the MC. This matrix is 
 \end{equation}
 where $\mathbf{Q}$ is a matrix containing the first $N$ rows and columns of $\Pbf^{B,N}$, form which we calculate the fundamental matrix of the absorbing MC as $\mathbf{N}= (\mathbf{I}_{N \times N}-\mathbf{Q})^{-1}$, where $\mathbf{I}_{N \times N}$ is the $N \times N$ identity matrix.
 The expected number of steps to absorption, if the system starts in state $S_0$, is the sum of all the elements in the first row of $\mathbf{N}$.
-}
 
 % Later in the article we will provide a general formula to compute $\psi_{d,\delta}^{B,N}$.
 % As a first step, however, we analyze the simpler case in which $d=0$, which means that all the stations are randomly choosing their transmission slot.
