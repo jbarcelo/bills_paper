@@ -649,7 +649,7 @@ And the solution described above is an instance of a decentralized constraint sa
 
 Examples of channel resources that can be assigned using decentralized constraint satisfaction problem solver include channel time slots (\cite{barcelo2008lba}), frequency channels (\cite{duffy2011dcs}) and code division multiple access scramble codes (\cite{checco2012scs}).
 
-For a given parametrization, the solver can be easily modeled as a Markov Chain (see, e.g., \cite{barcelo2010fcc, he2009sdr, fang2011dlm}).
+For a given parametrization, the solver can be easily modeled as a Markov Chain (see, e.g., \cite{barcelo2010fcc, he2009srb, fang2011dlm}).
 The computation of the transition probabilities for the starting state is the well-known problem of randomly assigning stations to resources mentioned above.
 However, the transition probabilities from the other states need to take into account that only a fraction of the stations randomly select the resource, while the others make a deterministic decisions.
 
@@ -663,7 +663,7 @@ We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \i
 The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
 An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
 
-While there are solvers for this kind of problem, they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks, e.g., wireless sensor or mesh networks, where nodes typically function in the absense of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
+While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks, e.g., wireless sensor or mesh networks, where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
 
 \Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
 
@@ -727,6 +727,9 @@ We are interested in the computation of the transition probability, $p_{d,\delta
 Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
 Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
+An illustrative example of the MC for the case $N=3$ is given in Fig. \ref{fig:markov_chain}.
+It can be observed that the MC has an absorbing state $S_{N}$.
+A curiosity is that the state $S_{N-1}$, in which a single station collides, is never reached.
 \begin{figure}
   \psfrag{S0}[cc][cc]{$S_0$}
   \psfrag{S1}[cc][cc]{$S_1$}
