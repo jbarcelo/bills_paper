@@ -631,7 +631,34 @@ To validate the model, we present some numerical results in Sect. \ref{}.
 Finally, Sect.\ref{} concludes the paper.
 
 \section{Related Work}
+Since the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role to arbitrate the access to the channel.
+The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}.
+The contending stations use carrier sense to prevent that a station interrupts another transmission.
+Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission.
+Until today, this backoff counter has been initialized with a random value.
+Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
 
+Recently, it has been pointed out that the random choice of the backoff value is not necessary after successful transmissions \cite{barcelo2008lba}.
+In fact, if the backoff value is deterministically chosen after successful transmissions, the chances of collisions are reduced.
+Furthermore, under certain idealistic conditions, the collision-free operation can be reached.
+The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g, \cite{he2009srb,barcelo2011tcf,fang2011dlm}.
+
+It is possible to model a protocol in which a deterministic backoff is used after successful collisions and a random backoff otherwise as a Markov Chain \cite{he2009srb, barcelo2010fcc}.
+This model is just a mathematically amenable approximation of the actual protocols.
+We will describe this model in the next section, and it will be used as a reference protocol for the rest of the paper.
+
+The problem that is addressed by this protocol is the decentralized assignment of stations to slots in such a way that there is no slot that contains more than one stations.
+Nevertheless, similar problems can be found in other areas of networking.
+Examples are provided in \cite{duffy2011dcs}, that accurately defines this family of problems and names it \emph{Decentralized Constraint Satisfaction} (DCS).
+The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
+
+In the present paper, we will consider a particular instance of that solver and compute the expected number of rounds that are required by the solver to find the solution.
+
+We will use the convention to say that a slot is successful when there is a single station transmitting in that slot.
+Similarly, we will refer to the station transmitting in the successful slot as a successful station.
+In our analysis, we will be presented with the problem of counting the number of successful slots when $N$ stations choose among $B$ slots.
+The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
+However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.
 
 \section{Decentralized Constraint Satisfaction}
 \label{sec:dcs}
