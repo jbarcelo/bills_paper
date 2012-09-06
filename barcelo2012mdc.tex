@@ -606,7 +606,7 @@ Recently, it has been pointed out that the random choice of the backoff value is
 In fact, if all the nodes that have successfully transmitted choose a common deterministic backoff value for their next transmission, the chances of collisions are reduced, since in their next transmission they may only collide with the remaining unsuccessful nodes.
 Furthermore, under certain idealistic conditions, a collision-free operation can be reached. 
 
-The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm}. 
+The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm,barcelo2010fcc}. 
 The goal of this class of protocols is to distributively build a collision-free schedule which will then repeat periodically. This translates into the decentralized assignment of stations to slots within one period of the schedule in such a way that there is no slot that contains more than one station. 
 Nevertheless, similar problems can be found in other areas of networking. Examples are provided in \cite{duffy2011dcs}, where this family of problems is accurately defined and named \emph{Decentralized Constraint Satisfaction} (DCS). 
 The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
@@ -614,14 +614,12 @@ The same paper also describes a solver and characterizes it by providing a bound
 We are interested in the convergence process, and in particular in forecasting the expected number of steps required to reach a solution. To this end, an absorbing Markov Chain (MC) model can be used to model the solver. The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
 The second contribution is the adaptation of the model to an environment in which errors can occur.
 
-\AzCom{Can we include \cite{barcelo2010fcc} with the other stuff listed above?}
 
-
-\AzDel{We will use the convention to say that a slot is successful when there is a single station transmitting in that slot.
-Similarly, we will refer to the station transmitting in the successful slot as a successful station.
-In our analysis, we will be presented with the problem of counting the number of successful slots when $N$ stations choose among $B$ slots.
-The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
-However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.} \AzCom{Not really introduction material. Remove or move elsewhere if needed!}
+%\AzDel{We will use the convention to say that a slot is successful when there is a single station transmitting in that slot.
+%Similarly, we will refer to the station transmitting in the successful slot as a successful station.
+%In our analysis, we will be presented with the problem of counting the number of successful slots when $N$ stations choose among $B$ slots.
+%The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
+%However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.} \AzCom{Not really introduction material. Remove or move elsewhere if needed!}
 
 \AzCom{We are presenting the CSMA stuff as just an example. Therefore, prior work cannot be only on our example but should be on the actual problem, i.e., DCS. We need some references, maybe on CS itself if there are not many on DCS and then highlight that the DCS stuff is recent.}
 
