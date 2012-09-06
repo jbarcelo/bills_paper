@@ -632,7 +632,6 @@ Finally, Sect.\ref{} concludes the paper.
 
 \section{Related Work}
 
-\cite{checco2012scs}
 
 The random assignment of channel resources to wireless stations or letting the stations choose among one of the possible resources appears repeatedly in the literature (e.g., \cite{szpankowski1983asc}, \cite{kartsakli2011tmd}).
 Obviously, it may happen that the same resource is assigned to more than one station.
@@ -646,7 +645,9 @@ Those stations that succeed stick to the chosen resource while the stations that
 At some point, if the number of stations is not larger than the number of resources, a solution is reached in which each of the stations has its own resource and there are no collisions.
 
 The assignment of channel resources to wireless stations is just an instance of a decentralized constraint satisfaction problem \cite{duffy2011dcs}.
-And the solution described above is an instance of a decentralized constraint satisfaction problem solver, which provably finds a solution in finite time and exhibits a performance comparable to well known constraint satisfaction problem solvers such as WalkSAT \cite{}.
+And the solution described above is an instance of a decentralized constraint satisfaction problem solver, which provably finds a solution in finite time and exhibits a performance comparable to well known constraint satisfaction problem solvers such as WalkSAT \cite{selman1993lss}.
+
+Examples of channel resources that can be assigned using decentralized constraint satisfaction problem solver include channel time slots (\cite{barcelo2008lba}), frequency channels (\cite{duffy2011dcs}) and code division multiple access scramble codes \cite{checco2012scs}.
 
 
 \section{Decentralized Constraint Satisfaction}
