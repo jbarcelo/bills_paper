@@ -709,6 +709,16 @@ We are interested in the computation of the transition probability, $p_{d,\delta
 Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
 Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
+\begin{figure}
+  \psfrag{S0}[cc][cc]{$S_0$}
+  \psfrag{S1}[cc][cc]{$S_1$}
+  \psfrag{S2}[cc][cc]{$S_2$}
+  \psfrag{S3}[cc][cc]{$S_3$}
+  \centering
+  \includegraphics[width=2.5in]{figures/markov_chain}
+  \caption{The absorbing Markov Chain when the number of contenders is $N=3$.}
+  \label{fig:markov_chain}
+\end{figure}
 
 \subsection{Calculating the Transition Probabilities}
 To calculate the transition probabilities, we number the stations from $1$ to $N$ for convenience and define $A_i$ to be the event that station $i$ succeeds, and the set $\mathbf{A}=\{A_i\}_{i=1}^{N}$ to be the collection of all such events.
