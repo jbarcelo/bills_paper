@@ -435,7 +435,7 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version can be obtained at:
@@ -466,7 +466,7 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Modelling a Decentralized Constraint Satisfaction Solver}
+\title{Modelling a Decentralized Constraint Satisfaction Solver for Collision-Free Channel Access}
 %
 %
 % author names and IEEE memberships
@@ -600,7 +600,7 @@ Decentralized constraint satisfaction, Markov Chain model, collision-free operat
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
 
-\IEEEPARstart{S}{ince} the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role in arbitrating the access to the channel. The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}. The contending stations use carrier sense to prevent stations from interrupting other transmissions. Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission. Until today, this backoff counter has been initialized with a random value. Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
+\IEEEPARstart{S}{ince} the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role in arbitrating the access to the channel. The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}. The contenders for the channels use carrier sense to prevent stations from interrupting other transmissions. Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission. Until today, this backoff counter has been initialized with a random value. Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
 
 Recently, it has been pointed out that the random choice of the backoff value is not necessary after successful transmissions \cite{barcelo2008lba}.
 In fact, if all the nodes that have successfully transmitted choose a common deterministic backoff value for their next transmission, the chances of collisions are reduced, since in their next transmission they may only collide with the remaining unsuccessful nodes.
@@ -633,10 +633,11 @@ Finally, Sect.\ref{} concludes the paper.
 \section{Related Work}
 
 
-The random assignment of channel resources to wireless stations or letting the stations choose among one of the possible resources appears repeatedly in the literature (e.g., \cite{szpankowski1983asc}, \cite{kartsakli2011tmd}).
-Obviously, it may happen that the same resource is assigned to more than one station.
-When a resource is assigned to more than one station, we refer to it as a collision.
-And we call those stations that do not collide successful stations.
+The random assignment of channel resources to wireless stations appears repeatedly in the literature (e.g., \cite{szpankowski1983asc}, \cite{kartsakli2011tmd}).
+This is roughly equivalent to allowing the wireless stations to randomly choose among the existing resources.
+Obviously, it may happen that the same resource is assigned to more than one station or that more than one station randomly choose the same resource.
+This event is called a collision.
+The stations involved in a collision are called colliding stations while we refer to the remaining stations as successful stations.
 The probability of obtaining $\delta$ successes given $N$ stations and $B$ resources is computed in \cite{szpankowski1983asc}.
 
 Recently, the initial idea of letting the stations randomly select one of the possible resources has been enhanced to contemplate several rounds (See \cite{fang2011dlm} and references therein).
@@ -650,8 +651,8 @@ And the solution described above is an instance of a decentralized constraint sa
 Examples of channel resources that can be assigned using decentralized constraint satisfaction problem solver include channel time slots (\cite{barcelo2008lba}), frequency channels (\cite{duffy2011dcs}) and code division multiple access scramble codes (\cite{checco2012scs}).
 
 For a given parametrization, the solver can be easily modeled as a Markov Chain (see, e.g., \cite{barcelo2010fcc, he2009srb, fang2011dlm}).
-The computation of the transition probabilities for the starting state is the well-known problem of randomly assigning stations to resources mentioned above.
-However, the transition probabilities from the other states need to take into account that only a fraction of the stations randomly select the resource, while the others make a deterministic decisions.
+The computation of the transition probabilities from the starting state is the well-known problem of randomly assigning stations to resources mentioned above.
+However, the transition probabilities from the other states need to take into account that only a fraction of the stations randomly select the resource, while the others make a deterministic decision.
 
 Compared to previous work, the contribution of this paper is the derivation of closed form expressions for those transition probabilities.
 Furthermore, we extend the Markov Chain to account for the presence of errors, that appear as collisions to the wireless stations.
@@ -663,7 +664,7 @@ We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \i
 The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
 An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
 
-While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks, e.g., wireless sensor or mesh networks, where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
+While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
 
 \Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
 
@@ -723,7 +724,6 @@ From the constraint satisfaction problem perspective, this is equivalent to sayi
 
 We are interested in the computation of the transition probability, $p_{d,\delta}^{B,N}$ , from one state $S_d$ to another state $S_\delta$, $0 \leq \delta \leq N$. In other words, $p_{d,\delta}^{B,N}$ is the probability of obtaining $\delta$ successful transmissions given $N$ stations and $B$ slots when $d$ of the stations use a deterministically chosen slot while the remaining $N-d$ stations transmit in a randomly chosen slot.
 
-\AzCom{Why not draw the MC?}
 Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
 Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
@@ -1043,7 +1043,7 @@ The number of slots in each round is set to $B=8$ and $B=16$, and the number of 
 The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
 
 The first results are for an ideal channel that does not introduce errors.
-We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator in c.\footnote{The two simulators in C that we have used and the scripts in maxima to compute the expectations derived from the analytical model can be downloaded from www.jaumebarcelo.info/papers/barcelo-macom2012-sources.zip .}
+We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source_paper_dcs} .}
 The results are presented in Fig.~\ref{fig:convergence_avg}.
 
 To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
@@ -1116,7 +1116,7 @@ The presented results have been validated by means of simulation.
 \section{Generalized Inclusion Exclusion Illustration}
 \label{app:incl-excl-thm}
 \label{app:theorem}
-The theorem we use is named ``The realization of $m$ among $N$ events'' and it is presented in \cite{feller1968ipt} in Sec. IV.3.
+The theorem we use is named ``The realization of $m$ among $N$ events'' in \cite{feller1968ipt} in Sec. IV.3.
 Following our notation, we are interested in computing the probability that exactly $m=\delta$ among the $N$ stations succeed.
 
 \begin{figure}
@@ -1143,10 +1143,9 @@ Note also that it is impossible that two stations succeed while the third statio
 If we want to compute the probability that exactly one station succeeds, we have to count the outcomes that belong to either $A_1$, $A_2$ or $A_3$ and are not part of the intersections.
 This is $|A_1|+|A_2|+|A_3|-2(|A_1\cap A_2|+|A_1\cap A_3|+|A_2\cap A_3|)+3(|A_1\cap A_2\cap A_3|)$.
 In our paper we will use the intermediate values
- $S(0,1)=P(A_1)+P(A_2)+P(A_3)$,
- $S(0,2)=P(A_1\cap A_2)+P(A_1\cap A_3)+P(A_2\cap A_3)$, and $S(0,3)=P(A_1\cap A_2\cap A_3)$.
- The probability that exactly one station succeeds is finally computed  as $S(0,1)-2S(0,2)+3S(0,3)$.
-
+ $S(1)=P(A_1)+P(A_2)+P(A_3)$,
+ $S(2)=P(A_1\cap A_2)+P(A_1\cap A_3)+P(A_2\cap A_3)$, and $S(3)=P(A_1\cap A_2\cap A_3)$.
+ The probability that exactly one station succeeds is finally computed  as $S(1)-2S(2)+3S(3)$.
 
 
 % use section* for acknowledgement
