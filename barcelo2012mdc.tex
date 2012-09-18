@@ -538,7 +538,7 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
 
 
 \begin{abstract}
-In this paper, the problem of distributed radio resource assignment in wireless networks is defined as a Decentralized Constraint Satisfaction (DCS) problem \cite{duffy2011dcs}. A protocol to allocate channel slots to contending stations in a multiple access scenario is used as the reference example. A particular solver that iteratively uses a stochastic search until it converges to a solution is considered. The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived. The expected number of steps required to reach a solution is found by calculating the MC's expected number of steps to absorption. The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
+The problem of distributed radio resource assignment in wireless networks is a constraint satisfaction problem that needs to be solved in a distributed fashion. A protocol to allocate channel slots to contending stations in a multiple access scenario is used as the reference example. A particular solver that iteratively uses a stochastic search until it converges to a solution is considered. The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived. The expected number of steps required to reach a solution is found by calculating the MC's expected number of steps to absorption. The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
 
 %\boldmath
 %In this paper we use a Markov Chain to model a simple solver for Decentralized Constrain Satisfaction problems.
@@ -555,7 +555,7 @@ In this paper, the problem of distributed radio resource assignment in wireless 
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Decentralized constraint satisfaction, Markov Chain model, collision-free operation, medium access control
+Decentralized constraint satisfaction problem solver, Markov Chain model, collision-free operation, medium access control
 \end{IEEEkeywords}
 
 
@@ -608,7 +608,8 @@ Furthermore, under certain idealistic conditions, a collision-free operation can
 
 The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm,barcelo2010fcc}. 
 The goal of this class of protocols is to distributively build a collision-free schedule which will then repeat periodically. This translates into the decentralized assignment of stations to slots within one period of the schedule in such a way that there is no slot that contains more than one station. 
-Nevertheless, similar problems can be found in other areas of networking. Examples are provided in \cite{duffy2011dcs}, where this family of problems is accurately defined and named \emph{Decentralized Constraint Satisfaction} (DCS). 
+Nevertheless, similar problems can be found in other areas of networking. 
+Examples are provided in \cite{duffy2011dcs}, which offers a general framework that encompasses problems such as graph colouring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks.
 The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
 
 We are interested in the convergence process, and in particular in forecasting the expected number of steps required to reach a solution. To this end, an absorbing Markov Chain (MC) model can be used to model the solver. The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
@@ -621,14 +622,14 @@ The second contribution is the adaptation of the model to an environment in whic
 %The particular case in which all the stations randomly choose the transmission slot has already been addressed in the literature in \cite{szpankowski1983asc}.
 %However, in the present paper, we have to consider also the case in which some of the stations choose their transmission slot deterministically while the remaining stations randomly choose their transmission slot.} \AzCom{Not really introduction material. Remove or move elsewhere if needed!}
 
-\AzCom{We are presenting the CSMA stuff as just an example. Therefore, prior work cannot be only on our example but should be on the actual problem, i.e., DCS. We need some references, maybe on CS itself if there are not many on DCS and then highlight that the DCS stuff is recent.}
+%\AzCom{We are presenting the CSMA stuff as just an example. Therefore, prior work cannot be only on our example but should be on the actual problem, i.e., DCS. We need some references, maybe on CS itself if there are not many on DCS and then highlight that the DCS stuff is recent.}
 
-In the next section, we define the DCS problems, and we will exemplify them by introducing a reference protocol in Sect. \ref{}. The reference protocol constructs a collision-free schedule in a wireless local area network (WLAN) in a distributed fashion. 
-The actual absorbing MC model is introduced in Sect. \ref{} where the expressions to compute the transition probabilities are also derived.
-These probabilities can be used to compute the expected number of steps required for the system to converge to a solution, as described in Sect. \ref{}.
-This section also describes the extension of the model to an environment in which errors (e.g., channel errors) can occur.
-To validate the model, we present some numerical results in Sect. \ref{}.
-Finally, Sect.\ref{} concludes the paper.
+%In the next section, we define the DCS problems, and we will exemplify them by introducing a reference protocol in Sect. \ref{}. The reference protocol constructs a collision-free schedule in a wireless local area network (WLAN) in a distributed fashion. 
+%The actual absorbing MC model is introduced in Sect. \ref{} where the expressions to compute the transition probabilities are also derived.
+%These probabilities can be used to compute the expected number of steps required for the system to converge to a solution, as described in Sect. \ref{}.
+%This section also describes the extension of the model to an environment in which errors (e.g., channel errors) can occur.
+%To validate the model, we present some numerical results in Sect. \ref{}.
+%Finally, Sect.\ref{} concludes the paper.
 
 \section{Related Work}
 
@@ -645,10 +646,12 @@ In a first round, the stations randomly choose one of the possible resources.
 Those stations that succeed stick to the chosen resource while the stations that collide randomly choose one of the possible resources again.
 At some point, if the number of stations is not larger than the number of resources, a solution is reached in which each of the stations has its own resource and there are no collisions.
 
-The assignment of channel resources to wireless stations is just an instance of a decentralized constraint satisfaction problem \cite{duffy2011dcs}.
-And the solution described above is an instance of a decentralized constraint satisfaction problem solver, which provably finds a solution in finite time and exhibits a performance comparable to well known constraint satisfaction problem solvers such as WalkSAT \cite{selman1993lss}.
+The assignment of channel resources to wireless stations is just an instance of a constraint satisfaction problem (CSP) \cite{duffy2011dcs} that needs to be solved distributively.
+And the solution described above is an instance of a decentralized CSP, which provably finds a solution in finite time and exhibits a performance comparable to well known constraint satisfaction problem solvers such as WalkSAT \cite{selman1993lss}.
 
-Examples of channel resources that can be assigned using decentralized constraint satisfaction problem solver include channel time slots (\cite{barcelo2008lba}), frequency channels (\cite{duffy2011dcs}) and code division multiple access scramble codes (\cite{checco2012scs}).
+Even though the literature on CSP is vast, and comprises different families of solvers as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solver is very recent and it is yet to be explored in depth.
+
+Examples of channel resources that can be assigned using decentralized CSP solver include channel time slots \cite{barcelo2008lba}, frequency channels \cite{duffy2011dcs} and code division multiple access scramble codes \cite{checco2012scs}.
 
 For a given parametrization, the solver can be easily modeled as a Markov Chain (see, e.g., \cite{barcelo2010fcc, he2009srb, fang2011dlm}).
 The computation of the transition probabilities from the starting state is the well-known problem of randomly assigning stations to resources mentioned above.
@@ -664,16 +667,25 @@ We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \i
 The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
 An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
 
-While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
+In radio resource allocation problems, it is natural that each of the variables is co-located with one of the wireless stations.
+And it is also likely that the different stations cannot communicate until the CSP is solved.
+Therefore, it is necessary to solve the CSP in a way that does not require explicit communication among the different stations.
 
-\Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
+Decentralized CSP solvers are formally defined in \cite{duffy2011dcs} to capture the additional requirements that a CSP solver must comply with in order to be able to operate in a distributed fashion.
+The distributed CSP solver is executed in each of the stations and the only information that it is available to the algorithm is whether all the clauses in which the wireless station participates are satisfied or not.
+As detailed in \cite{duffy2011dcs}, previous CSP are decentralized.
 
-A DCS solver is presented in \cite{duffy2011dcs} that searches for a solution of the problem using an iterative approach. The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
+%While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they require the presence of a centralized 
+%are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
+
+%\Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
+
+A decentralized CSP solver is presented in \cite{duffy2011dcs} that stochastically searches for a solution of the problem using an iterative approach. The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
 The solver uses two different parameters, $a$ and $b$, to adjust the learning process.
 An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
 
 To illustrate how the constraint satisfaction problem maps to practical scenarios, we will briefly cover two examples. First, the assignment of frequency channels to WLAN access points and, second, the assignment of time slots to contending wireless stations in a WLAN, which we will use as our reference scenario.
-The first example consists in a set of WLAN access points that need to select the channels they use in a distributed fashion. Since the access points that are close to one another may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a DCS problem. Here variable $x_i$ indicates the channel for access point $i$, chosen from the set of available channels $\mathbf{B}$. There is one clause per every pair of access points in each other's interference range, indicating whether they have selected the same channel or not.
+The first example consists in a set of WLAN access points that need to select the channels they use in a distributed fashion. Since the access points that are close to one another may interfere with each other's communication, but may not be able to communicate directly with each other, this presents a decentralized CSP problem. Here variable $x_i$ indicates the channel for access point $i$, chosen from the set of available channels $\mathbf{B}$. There is one clause per every pair of access points in each other's interference range, indicating whether they have selected the same channel or not.
 
 \section{The Reference Scenario}
 
@@ -1081,7 +1093,7 @@ The results for a channel error probability $\epsilon=0.1$, different numbers of
 \section{Conclusion}
 \label{sec:conclusion}
 
-In this paper we have studied a Decentralized Constraint Satisfaction (DCS) problem solver to assign channel slots to contending stations.
+In this paper we have studied a decentralize CSP solver to assign channel slots to contending stations.
 The stations deterministically choose their transmission slots after successful transmissions.
 If the transmission is not successful, the station randomly chooses its next transmission slot.
 The system eventually converges to collision-free operation in ideal channel conditions.
