@@ -1,39 +1,79 @@
-all:	clean bib pdf 
+# LaTeX Makefile for dvi, ps, and pdf file creation.
+# By Jeffrey Humpherys
+# Written April 05, 2004
+# Revised January 13, 2005
+# Thanks Bjorn and Boris
+#
+# Usage:
+# make	  # make dvi, ps, and pdf
+# make dvi      # make dvi
+# make ps       # make ps (and dvi)
+# make pdf      # make pdf
+#
 
-pdf: 
-	latex barcelo2012mdc.tex
-	latex barcelo2012mdc.tex
-	#dvipdfm barcelo2012mdc.dvi
-	dvips -o barcelo2012mdc.ps -Ppdf -G0 -t a4 barcelo2012mdc.dvi
-	ps2pdf -sPAPERSIZE=a4 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true barcelo2012mdc.ps
+MAIN		= barcelo2012mdc
+SOURCES		= $(wildcard ./*.tex)
+EPSFIGURES	= $(patsubst %.fig,%.eps,$(wildcard ./figures/*.fig))
+PDFFIGURES	= $(patsubst %.fig,%.pdf,$(wildcard ./figures/*.fig))
+
+all: bbl dvi ps pdf
+
+bbl: ${MAIN}.bbl
+dvi: ${MAIN}.dvi
+pdf: ${MAIN}.pdf
+ps: ${MAIN}.ps
+
+${MAIN}.bbl: my_bib.bib
+	latex ${MAIN}
+	@while ( grep "Rerun to get cross-references"	\
+			${MAIN}.log > /dev/null ); do		\
+				echo '** Re-running LaTeX **';		\
+		latex ${MAIN};				\
+	done
+	bibtex ${MAIN}
+	latex ${MAIN}
+	@while ( grep "Rerun to get cross-references"	\
+			${MAIN}.log > /dev/null ); do		\
+				echo '** Re-running LaTeX **';		\
+		latex ${MAIN};				\
+	done
+	
+
+${MAIN}.dvi : ${SOURCES} ${EPSFIGURES}
+	latex ${MAIN}
+	@while ( grep "Rerun to get cross-references"	\
+			${MAIN}.log > /dev/null ); do		\
+				echo '** Re-running LaTeX **';		\
+		latex ${MAIN};				\
+	done
+
+${MAIN}.pdf : ${MAIN}.dvi ${EPSFIGURES}
+	dvips -o ${MAIN}.ps -Ppdf -G0 -t a4 ${MAIN}.dvi
+	ps2pdf -sPAPERSIZE=a4 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true ${MAIN}.ps
 	evince barcelo2012mdc.pdf &
 
-publish:
-	cp barcelo2012mdc.pdf /media/USB20FD/upf2012/webs/s3web/papers/
-	s3cmd put --acl-public barcelo2012mdc.pdf s3://www.jaumebarcelo.info/papers/ &
-
-
-bib:	
-	latex barcelo2012mdc.tex
-	bibtex barcelo2012mdc
-					
+${MAIN}.ps : ${MAIN}.dvi
+	# running dvips
+	dvips ${MAIN}.dvi -o ${MAIN}.ps
 clean:
-	rm -f barcelo2012mdc.aux barcelo2012mdc.log barcelo2012mdc.blg barcelo2012mdc.bbl barcelo2012mdc.out barcelo2012mdc.dvi barcelo2012mdc.ps barcelo2012mdc.pdf *diff* *~
+	rm -f ./figures/*.tex
+	rm -f ./figures/*.pdf
+	rm -f ./figures/*.bak
+	rm -f ./*.aux
+	rm -f ./*.tex~
+#
+# (re)Make .eps is .fig if newer
+#
+%.eps : %.fig
+	#Creates .eps file
+	fig2dev -L pstex $*.fig > $*.eps
+	#Creates .tex file
+	fig2dev -L pstex_t -p $* $*.fig > $*.tex
+#
+# (re)Make .pdf if .esp is newer
+#
+%.pdf : %.eps
+	#Creates .pdf files from .esp files
+	epstopdf $*.eps > $*.pdf
 
-differences:
-	cp barcelo2012mdc.tex new.tex
-	#git show HEAD~10:barcelo2012mdc.tex>old.tex
-	latexdiff old.tex new.tex > barcelo2012mdc_diff.tex
-	latex barcelo2012mdc_diff.tex
-	latex barcelo2012mdc_diff.tex
-	bibtex barcelo2012mdc_diff
-	latex barcelo2012mdc_diff.tex
-	latex barcelo2012mdc_diff.tex
-	dvips -o barcelo2012mdc_diff.ps -Ppdf -G0 -t a4 barcelo2012mdc_diff.dvi
-	ps2pdf -sPAPERSIZE=a4 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true barcelo2012mdc_diff.ps
-	evince barcelo2012mdc_diff.pdf &
-
-publishdifferences:
-	cp barcelo2012mdc_diff.pdf /media/USB20FD/upf2012/webs/s3web/papers/
-	s3cmd put --acl-public barcelo2012mdc_diff.pdf s3://www.jaumebarcelo.info/papers/
 
