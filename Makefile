@@ -4,6 +4,8 @@
 # Revised January 13, 2005
 # Thanks Bjorn and Boris
 #
+# Adapted by Jaume Barcelo
+#
 # Usage:
 # make	  # make dvi, ps, and pdf
 # make dvi      # make dvi
@@ -52,12 +54,8 @@ ${MAIN}.pdf : ${MAIN}.dvi ${EPSFIGURES}
 	ps2pdf -sPAPERSIZE=a4 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true ${MAIN}.ps
 	evince barcelo2012mdc.pdf &
 
-${MAIN}.ps : ${MAIN}.dvi
-	# running dvips
-	dvips ${MAIN}.dvi -o ${MAIN}.ps
 clean:
 	rm -f ./figures/*.tex
-	rm -f ./figures/*.pdf
 	rm -f ./figures/*.bak
 	rm -f ./*.aux
 	rm -f ./*.tex~
@@ -67,13 +65,5 @@ clean:
 %.eps : %.fig
 	#Creates .eps file
 	fig2dev -L pstex $*.fig > $*.eps
-	#Creates .tex file
-	fig2dev -L pstex_t -p $* $*.fig > $*.tex
-#
-# (re)Make .pdf if .esp is newer
-#
-%.pdf : %.eps
-	#Creates .pdf files from .esp files
-	epstopdf $*.eps > $*.pdf
 
 
