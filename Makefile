@@ -25,19 +25,23 @@ dvi: ${MAIN}.dvi
 pdf: ${MAIN}.pdf
 diff: ${MAIN}_diff.pdf
 
-${MAIN}.bbl: my_bib.bib
-	latex ${MAIN}
+publish: ${MAIN}.pdf ${MAIN}_diff.pdf
+	s3cmd put --acl-public barcelo2012mdc.pdf s3://www.jaumebarcelo.info/papers/
+	s3cmd put --acl-public barcelo2012mdc_diff.pdf s3://www.jaumebarcelo.info/papers/
+
+%.bbl: my_bib.bib
+	latex $*
 	@while ( grep "Rerun to get cross-references"	\
-			${MAIN}.log > /dev/null ); do		\
+			$*.log > /dev/null ); do		\
 				echo '** Re-running LaTeX **';		\
-		latex ${MAIN};				\
+		latex $*;				\
 	done
-	bibtex ${MAIN}
-	latex ${MAIN}
+	bibtex $*
+	latex $*
 	@while ( grep "Rerun to get cross-references"	\
-			${MAIN}.log > /dev/null ); do		\
+			$*.log > /dev/null ); do		\
 				echo '** Re-running LaTeX **';		\
-		latex ${MAIN};				\
+		latex $*;				\
 	done
 	
 
@@ -57,7 +61,7 @@ ${MAIN}.pdf : ${MAIN}.dvi ${EPSFIGURES}
 ${MAIN}_diff.tex: ${SOURCES}
 	latexdiff old.tex ${MAIN}.tex > ${MAIN}_diff.tex
 	
-${MAIN}_diff.dvi : ${MAIN}_diff.tex ${EPSFIGURES}
+${MAIN}_diff.dvi : ${MAIN}_diff.tex ${MAIN}_diff.bbl ${EPSFIGURES}
 	latex ${MAIN}_diff
 	@while ( grep "Rerun to get cross-references"	\
 			${MAIN}_diff.log > /dev/null ); do		\
