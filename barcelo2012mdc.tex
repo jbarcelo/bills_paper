@@ -538,7 +538,7 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
 
 
 \begin{abstract}
-The problem of distributed radio resource assignment in wireless networks is a constraint satisfaction problem that needs to be solved in a distributed fashion. A protocol to allocate channel slots to contending stations in a multiple access scenario is used as the reference example. A particular solver that iteratively uses a stochastic search until it converges to a solution is considered. The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived. The expected number of steps required to reach a solution is found by calculating the MC's expected number of steps to absorption. The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
+The problem of distributed radio resource assignment in wireless networks is a constraint satisfaction problem that needs to be solved in a distributed fashion. Using as a reference example a protocol to allocate channel slots to contending stations in a multiple access scenario, a particular solver that iteratively uses a stochastic search until it converges to a solution is considered. The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived. The expected number of steps required to reach a solution is found by calculating the MC's expected number of steps to absorption. The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
 
 %\boldmath
 %In this paper we use a Markov Chain to model a simple solver for Decentralized Constrain Satisfaction problems.
@@ -600,19 +600,20 @@ Decentralized constraint satisfaction problem solver, Markov Chain model, collis
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
 
-\IEEEPARstart{S}{ince} the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role in arbitrating the access to the channel. The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}. The contenders for the channels use carrier sense to prevent stations from interrupting other transmissions. Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission. Until today, this backoff counter has been initialized with a random value. Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
+\IEEEPARstart{S}{ince} the inception of wireless local area networks (WLANs), random medium access mechanisms have played a key role in arbitrating the access to the shared channel. The core principles of the medium access control (MAC) that were introduced in the first release of the IEEE 802.11 standard are still valid today \cite{IEEE80211-IEEESTD2007}. The contenders for the channels use carrier sense to prevent stations from interrupting other transmissions. Slotted time combined with a backoff counter is used to reduce the chances that two stations simultaneously start a transmission. Until today, this backoff counter has been initialized with a random value. Stations separate two transmission attempts by a random backoff, to give the opportunity to other stations to transmit.
 
 Recently, it has been pointed out that the random choice of the backoff value is not necessary after successful transmissions \cite{barcelo2008lba}.
 In fact, if all the nodes that have successfully transmitted choose a common deterministic backoff value for their next transmission, the chances of collisions are reduced, since in their next transmission they may only collide with the remaining unsuccessful nodes.
 Furthermore, under certain idealistic conditions, a collision-free operation can be reached. 
 
-The idea of using a deterministic backoff after successful transmissions has been later explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm,barcelo2010fcc}. 
+The idea of using a deterministic backoff after successful transmissions has been explored in more detail in, e.g., \cite{he2009srb,barcelo2011tcf,fang2011dlm,barcelo2010fcc}. 
 The goal of this class of protocols is to distributively build a collision-free schedule which will then repeat periodically. This translates into the decentralized assignment of stations to slots within one period of the schedule in such a way that there is no slot that contains more than one station. 
-Nevertheless, similar problems can be found in other areas of networking. 
+
+Similar problems can be found in other areas of networking. 
 Examples are provided in \cite{duffy2011dcs}, which offers a general framework that encompasses problems such as graph colouring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks.
 The same paper also describes a solver and characterizes it by providing a bound that describes the convergence properties of the solver.
 
-We are interested in the convergence process, and in particular in forecasting the expected number of steps required to reach a solution. To this end, an absorbing Markov Chain (MC) model can be used to model the solver. The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
+We are interested in this convergence process, and in particular in forecasting the expected number of steps required to reach a solution. To this end, an absorbing Markov Chain (MC) model can be used to model the solver. The first contribution of this paper is the derivation of closed-form expressions to compute the transition probabilities of the absorbing MC.
 The second contribution is the adaptation of the model to an environment in which errors can occur.
 
 
@@ -631,12 +632,12 @@ The second contribution is the adaptation of the model to an environment in whic
 %To validate the model, we present some numerical results in Sect. \ref{}.
 %Finally, Sect.\ref{} concludes the paper.
 
-\section{Related Work}
+\section{Problem Statement and Related Work}
 
 
 The random assignment of channel resources to wireless stations appears repeatedly in the literature (e.g., \cite{szpankowski1983asc}, \cite{kartsakli2011tmd}).
 This is roughly equivalent to allowing the wireless stations to randomly choose among the existing resources.
-Obviously, it may happen that the same resource is assigned to more than one station or that more than one station randomly choose the same resource.
+Obviously, it may happen that the same resource is assigned to more than one station or that more than one station randomly chooses the same resource.
 This event is called a collision.
 The stations involved in a collision are called colliding stations while we refer to the remaining stations as successful stations.
 The probability of obtaining $\delta$ successes given $N$ stations and $B$ resources is computed in \cite{szpankowski1983asc}.
@@ -647,58 +648,67 @@ Those stations that succeed stick to the chosen resource while the stations that
 At some point, if the number of stations is not larger than the number of resources, a solution is reached in which each of the stations has its own resource and there are no collisions.
 Collisions seriously impair the network performance, specially when they trigger the auto rate fallback (ARF) mechanism \cite{martorell2012pec, martorell2012tfl}.
 
-The assignment of channel resources to wireless stations is just an instance of a constraint satisfaction problem (CSP) \cite{duffy2011dcs} that needs to be solved distributively.
-And the solution described above is an instance of a decentralized CSP, which provably finds a solution in finite time and exhibits a performance comparable to well known CSP solvers such as WalkSAT \cite{selman1993lss}.
+The assignment of channel resources to wireless stations is just an instance of a constraint satisfaction problem (CSP). A CSP with $N$ variables is defined as follows (adopting the notation from \cite{duffy2011dcs}).
+We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \in \mathbf{B}=\left\{1, \dots, B \right\}, \forall i $, and $M$ clauses, $\left\{ \Phi_1(\mathbf{x}),\dots,\Phi_M(\mathbf{x}) \right\}$, that are boolean functions.
+The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
+An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
 
-Even though the literature on CSP is vast, and comprises different families of solvers as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solver is very recent and it is yet to be explored in depth.
+In radio resource allocation problems, it is natural that each of the variables represents one of the wireless stations, and that $\mathbf{B}$ represents the available resources.
+It is likely that the different stations cannot communicate until the CSP is solved.
+Therefore, it is necessary to find a solution in a distributed fashion, thus the problem becomes a decentralized CSP \cite{duffy2011dcs}.
 
-Examples of channel resources that can be assigned using decentralized CSP solver include channel time slots \cite{barcelo2008lba}, frequency channels \cite{duffy2011dcs} and code division multiple access scramble codes \cite{checco2012scs}.
+Examples of channel resources that can be assigned using decentralized CSP solvers include channel time slots \cite{barcelo2008lba}, frequency channels \cite{duffy2011dcs} and code division multiple access scramble codes \cite{checco2012scs}.
+%Decentralized CSP solvers are formally defined in \cite{duffy2011dcs} to capture the additional requirements that a CSP solver must comply with in order to be able to operate in a distributed fashion.
+The solution described above is an instance of a decentralized CSP, which provably finds a solution in finite time and exhibits a performance comparable to well known CSP solvers such as WalkSAT \cite{selman1993lss}.
+
+Even though the literature on CSP is vast, and comprises different families of solvers as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solvers is very recent and it is yet to be explored in depth.
 
 The solver presented in \cite{duffy2011dcs} accepts two parameters to adjust the learning process in the search for a solution.
-For a particular value of this parameters, it is easy to model the solving process as a MC (see, e.g., \cite{barcelo2010fcc, he2009srb, fang2011dlm}).
+For a particular value of these parameters, it is easy to model the solving process as a MC (see, e.g., \cite{barcelo2010fcc, he2009srb, fang2011dlm}).
 The computation of the transition probabilities from the starting state is the well-known problem of randomly assigning stations to resources mentioned above.
 However, the transition probabilities from the other states need to take into account that only a fraction of the stations randomly select the resource, while the others make a deterministic decision.
 
 Compared to previous work, the contribution of this paper is the derivation of closed form expressions for those transition probabilities.
 Furthermore, we extend the Markov Chain to account for the presence of errors, taking into account that the contending stations, after an unsuccessful transmission, cannot differentiate between a collision or a channel error.
+In the following section, we detail the reference scenario and the reference protocol that are the CSP problem and decentralized CSP solver which we consider in the remainder of the paper.
 
-\section{Decentralized Constraint Satisfaction}
-\label{sec:dcs}
-A Constraint Satisfaction problem with $N$ variables is defined as follows (adopting the notation from \cite{duffy2011dcs}).
-We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \in \mathbf{B}=\left\{1, \dots, B \right\}, \forall i $, and $M$ clauses, $\left\{ \Phi_1(\mathbf{x}),\dots,\Phi_M(\mathbf{x}) \right\}$, that are boolean functions.
-The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
-An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
-
-In radio resource allocation problems, it is natural that each of the variables is co-located with one of the wireless stations.
-And it is also likely that the different stations cannot communicate until the CSP is solved.
-Therefore, it is necessary to solve the CSP in a way that does not require explicit communication among the different stations.
-
-Decentralized CSP solvers are formally defined in \cite{duffy2011dcs} to capture the additional requirements that a CSP solver must comply with in order to be able to operate in a distributed fashion.
-The distributed CSP solver is executed in each of the stations and the only information that it is available to the algorithm is whether all the clauses in which the wireless station participates are satisfied or not.
-As detailed in \cite{duffy2011dcs}, previous CSP are decentralized.
+%\section{Decentralized Constraint Satisfaction}
+%\label{sec:dcs}
+%A Constraint Satisfaction problem with $N$ variables is defined as follows (adopting the notation from \cite{duffy2011dcs}).
+%We consider $N$ variables,  \mbox{$\mathbf{x} := (x_1,\dots,x_N)$}, with $x_i \in \mathbf{B}=\left\{1, \dots, B \right\}, \forall i $, and $M$ clauses, $\left\{ \Phi_1(\mathbf{x}),\dots,\Phi_M(\mathbf{x}) \right\}$, that are boolean functions.
+%The $M$ clauses represent the constraints and take a value equal to 1 if the constraint is satisfied and 0 otherwise.
+%An assignment $\mathbf{x}$ is a solution to the problem if all the constraints are satisfied.
+%
+%In radio resource allocation problems, it is natural that each of the variables represents one of the wireless stations, and that $\mathbf{B}$ represents the available resources.
+%It is likely that the different stations cannot communicate until the CSP is solved.
+%Therefore, it is necessary to treat the problem as a decentralized CSP.
+%Therefore, it is necessary to solve the CSP in a way that does not require explicit communication among the different stations.
+%The distributed CSP solver is executed in each of the stations and the only information available to the algorithm is whether all the clauses containing the wireless station are satisfied or not.
+%As detailed in \cite{duffy2011dcs}, previous CSPs are decentralized.
 
 %While there are solvers for this kind of problem (e.g., \cite{selman1993lss}), they require the presence of a centralized 
 %are typically centralized \AzCom{references?}, i.e., assuming that the solver has the complete information about all variables. In communication networks, however, this assumption normally does not hold. Examples are often encountered in the area of wireless networks where nodes typically function in the absence of any centralized control. Hence, it is necessary to find solvers that can solve the constraint satisfaction problem in a decentralized manner. 
 
 %\Az{A Decentralized Constraint Satisfaction (DCS) solver \AzCom{The problem is the same one defined above and is not decentralized, the solver is. We should fix this throughout the paper. Also, it may be better to use the same acronym as Duffy (decentralized CSP)} chooses the value of a variable $x_i$ at every step, based on only a single bit of information that indicates whether or not the clauses in which $x_i$ participates were satisfied in the previous step. In other words, the decision is based solely on whether those clauses whose values are affected by $x_i$ were all satisfied in the previous step, or there is at least one of them that has not been satisfied.} 
 
-A decentralized CSP solver is presented in \cite{duffy2011dcs} that stochastically searches for a solution of the problem using an iterative approach. The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
-The solver uses two different parameters, $a$ and $b$, to adjust the learning process.
-An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
+%The decentralized CSP solver of \cite{duffy2011dcs} stochastically searches for a solution of the problem using an iterative approach. 
+%%The solver learns from previous mistakes in order to increase the chances of reaching a solution in the next step. 
+%In the first step, the variables take one of the possible values with equal probability. Then the clauses are evaluated and this information is used to determine the probabilities for the assignments of values to the variables in the next round.
+%The solver uses two different parameters, $a$ and $b$, to adjust the process.
+%An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
 
-In the following section, we detail the reference scenario and the reference protocol that are the CSP problem and decentralized CSP solver that we consider in the remainder of the paper.
+%In the following section, we detail the reference scenario and the reference protocol that are the CSP problem and decentralized CSP solver which we consider in the remainder of the paper.
 
 \section{The Reference Scenario and Reference Protocol}
 
-The second example, and our reference scenario, is the distributed assignment of $N$ contending wireless stations to $B$ channel time slots. 
+Our reference scenario is the distributed assignment of $N$ contending wireless stations to $B$ channel time slots. 
 In each slot a single transmission can be completed and acknowledged. 
 From a station's perspective, there are two possible outcomes for every transmission.
-The station succeeds if no other station is assigned the same slot. 
-A successful transmission is acknowledged within the same slot in which the transmission has taken place.
-If at least one other station picks the same slot, all stations involved will suffer a collision, and the transmission is unsuccessful, in which case no acknowledgement will be received.
+The station succeeds if no other station is assigned the same slot and its transmission is acknowledged in the same slot. 
+%A successful transmission is acknowledged within the same slot in which the transmission has taken place.
+If at least one other station picks the same slot, all stations involved will suffer a collision, and the transmission is unsuccessful, in which case no acknowledgment will be received.
 
-
-For this example, the variables $\{x_i\}_{i=1}^{N}$ in the corresponding CSP are the slots chosen by the $N$ contending wireless stations from the set of available slots $\mathbf{B}$. Again, there is one clause per pair of variables evaluating if they have the same value or not. The clause will return 0 if the two participating stations have selected the same slot (i.e., collision) and returns 1 otherwise.
+For this example, the variables $\{x_i\}_{i=1}^{N}$ in the corresponding CSP are the slots chosen by the $N$ contending wireless stations from the set of available slots $\mathbf{B}$. There is one clause per pair of variables evaluating if they have the same value or not. The clause will return 0 if the two participating stations have selected the same slot (i.e., a collision) and returns 1 otherwise.
 
 \subsection{The Reference Protocol}
 
@@ -718,6 +728,7 @@ This protocol is a simplified version of a variant of CSMA/CA, called CSMA with 
 The reference protocol can be viewed as a distributed solver for the corresponding CSP defined in the previous section. In the first round, the variables $x_i$ are assigned a value in $\{1,\cdots, B \}$ randomly, with probability $1/B$. Then the constraints are evaluated.
 Those variables that are involved in constraints that are not satisfied take a random value again in the next round, while the other variables keep the same value as in the previous round.
 When a solution is reached, all the variables keep the same value. This solver is, in fact, an instance of the parametrized solver proposed in \cite{duffy2011dcs} with the parameter values set to $a=b=1$.
+An attractive property of this decentralized solver is that it reaches the solution in finite time, if it exists, and its performance is comparable to the known centralized solvers.
 
 
 \section{The Markov Chain Model}
@@ -731,28 +742,28 @@ When a solution is reached, all the variables keep the same value. This solver i
 
 We are interested in calculating the expected number of rounds required to reach a solution. To this end, we construct a Markov chain to model the behavior of the DSC solver and use the reference protocol to explain it in a more tangible manner.
 % can be used to estimate the expected number of steps required to reach the solution. To illustrate the solution better, we will use the protocol described in the previous paragraph as the on-going example.
-By pigeonhole principle, a solution exists only when $N\leq B$, i.e., when there are at least as many slots in a round as the total number of stations. Considering $N\leq B$ contending stations in the reference protocol, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
+By the pigeonhole principle, a solution exists only when $N\leq B$, i.e., when there are at least as many slots in a round as the total number of stations. Considering $N\leq B$ contending stations in the reference protocol, the associated MC model has $N+1$ different states, $S_0, \dots, S_N$.
 The system is in state $S_d$ if exactly $d$ stations ($0 \leq d \leq N$) were successful in the previous round and, therefore, will deterministically choose their transmission slot in the current round.
 From the CSP perspective, this is equivalent to saying that there are exactly $d$ variables that were not involved in any constraint that was not satisfied in the previous round.
 
 We are interested in the computation of the transition probability, $p_{d,\delta}^{B,N}$ , from one state $S_d$ to another state $S_\delta$, $0 \leq \delta \leq N$. In other words, $p_{d,\delta}^{B,N}$ is the probability of obtaining $\delta$ successful transmissions given $N$ stations and $B$ slots when $d$ of the stations use a deterministically chosen slot while the remaining $N-d$ stations transmit in a randomly chosen slot.
 
-Note that the considered MC is an absorbing MC, as $p_{d,\delta}^{B,N}=1$ when both $d$ and $\delta$ are equal to $N$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
+Note that the considered MC is an absorbing MC, as $p_{N,N}^{B,N}=1$. This is because, once a collision-free schedule is found, the same collision-free schedule is repeated in every subsequent step.
 Since the MC is absorbing, the expected number of steps before convergence can be computed if the values of $p_{d,\delta}^{B,N}$ are known \cite{grinstead1997ip}.
 
-An illustrative example of the MC for the case $N=3$ is given in Fig. \ref{fig:markov_chain}.
-It can be observed that the MC has an absorbing state $S_{N}$.
-A curiosity is that the state $S_{N-1}$, in which a single station collides, is never reached.
-\begin{figure}
-  \psfrag{S0}[cc][cc]{$S_0$}
-  \psfrag{S1}[cc][cc]{$S_1$}
-  \psfrag{S2}[cc][cc]{$S_2$}
-  \psfrag{S3}[cc][cc]{$S_3$}
-  \centering
-  \includegraphics[width=2.5in]{figures/markov_chain}
-  \caption{The absorbing Markov Chain when the number of contenders is $N=3$.}
-  \label{fig:markov_chain}
-\end{figure}
+%An illustrative example of the MC for the case $N=3$ is given in Fig. \ref{fig:markov_chain}.
+%It can be observed that the MC has an absorbing state $S_{N}$.
+%A curiosity is that the state $S_{N-1}$, in which a single station collides, can never be reached.
+%\begin{figure}
+%  \psfrag{S0}[cc][cc]{$S_0$}
+%  \psfrag{S1}[cc][cc]{$S_1$}
+%  \psfrag{S2}[cc][cc]{$S_2$}
+%  \psfrag{S3}[cc][cc]{$S_3$}
+%  \centering
+%  \includegraphics[width=2.5in]{figures/markov_chain}
+%  \caption{The absorbing Markov Chain when the number of contenders is $N=3$.}
+%  \label{fig:markov_chain}
+%\end{figure}
 
 \subsection{Calculating the Transition Probabilities}
 To calculate the transition probabilities, we number the stations from $1$ to $N$ for convenience and define $A_i$ to be the event that station $i$ succeeds, and the set $\mathbf{A}=\{A_i\}_{i=1}^{N}$ to be the collection of all such events.
@@ -766,7 +777,8 @@ where $S(j)$ is given by
 \label{eq:S_j_def}
 S(j) = \sum_{\forall \Abf^{j} \subseteq \Abf} \pr{\bigcap_{A_i \in \Abf^{j}} A_i}.
 \end{equation}
-Here $\Abf^{j}$ denotes a subset of $\Abf$ that has exactly $j$ elements, i.e., $|\mathbf{A}^{j}|=j$. Therefore, $\pr{\bigcap_{A_i \in \Abf^{j}} A_i}$ is the probability that all the $j$ stations represented in $\Abf^{j}$  successfully transmit. Note that $S(j)$ is a sum of probabilities, but it is not itself a probability. An intuitive explanation of (\ref{eq:Pij}) is presented in Appendix \ref{app:incl-excl-thm}.
+Here $\Abf^{j}$ denotes a subset of $\Abf$ that has exactly $j$ elements, i.e., $|\mathbf{A}^{j}|=j$. Therefore, $\pr{\bigcap_{A_i \in \Abf^{j}} A_i}$ is the probability that all the $j$ stations represented in $\Abf^{j}$  successfully transmit. Note that $S(j)$ is a sum of probabilities, but it is not itself a probability. 
+%An intuitive explanation of (\ref{eq:Pij}) is presented in Appendix \ref{app:incl-excl-thm}.
 
 % denoted hereafter by $P(\Abf^j_{\cap})$
 For a given set of $j$ tagged stations in $\Abf^{j}$, the probability $\pr{\bigcap_{A_i \in \Abf^{j}} A_i}$ depends on $k$, the number of deterministic stations within the $j$ tagged stations. The $j$ tagged stations succeed if the $j-k$ random stations among them choose unoccupied slots, and the remaining $N-d-(j-k)$ untagged random stations choose slots that are different from the ones selected by the $j$ tagged stations. The first event occurs with probability $$\binom{B-d}{j-k} \frac{(j-k)!}{B^{j-k}},$$ and the second with probability $$\left(\frac{B-j}{B} \right)^{N-d-(j-k)}.$$
@@ -786,7 +798,7 @@ For any given $j$, there are $\binom{d}{k} \binom{N-d}{j-k}$ sets $\Abf^{j}$ wit
 \label{eq:k_bound}
 \max(0,j+d-N) \leq k \leq \min(d,j),
 \end{align}
-since in a set of $j$ nodes, there cannot be more deterministic stations than the total number of deterministic stations ($k \leq d$), or more random stations than the than the total number of random stations ($j-k \leq N-d$). 
+since in a set of $j$ nodes, there cannot be more deterministic stations than the total number of deterministic stations ($k \leq d$), or more random stations than the total number of random stations ($j-k \leq N-d$). 
 
 
 Using (\ref{eq:S_j_def}), (\ref{eq:pAkj}), and (\ref{eq:k_bound}), $S(j)$ can be calculated as
@@ -800,7 +812,7 @@ and for $j=N$,
 \label{eq:S_N}
 S(N) = \frac{(B-d)!}{(B-N)!~B^{N-d}}.
 \end{align}
-Finally, the transition probabilities when $d<N$ can be calculated by replacing $S(j)$ in (\ref{eq:Pij}).
+Finally, the transition probabilities for $d<N$ can be calculated by replacing $S(j)$ in (\ref{eq:Pij}).
 
 
 \subsection{Calculating the Number of Steps until Absorption}
@@ -816,7 +828,7 @@ Let $\Pbf^{B,N}$ be the transition probability matrix of the MC. This matrix is 
 \middlehrule{1}{1}
     \hbox{ABS}\bigstrut&\mathbf{0}_{(1 \times N)} &\srule & 1}
 \end{equation}
-where $\mathbf{Q}$ is a matrix containing the first $N$ rows and columns of $\Pbf^{B,N}$, form which we calculate the fundamental matrix of the absorbing MC as $\mathbf{N}= (\mathbf{I}_{N \times N}-\mathbf{Q})^{-1}$, where $\mathbf{I}_{N \times N}$ is the $N \times N$ identity matrix.
+where $\mathbf{Q}$ is a matrix containing the first $N$ rows and columns of $\Pbf^{B,N}$, from which we calculate the fundamental matrix of the absorbing MC as $\mathbf{N}= (\mathbf{I}_{N \times N}-\mathbf{Q})^{-1}$, where $\mathbf{I}_{N \times N}$ is the $N \times N$ identity matrix.
 The expected number of steps to absorption, if the system starts in state $S_0$, is the sum of all the elements in the first row of $\mathbf{N}$.
 
 \subsection{The Markov Chain in the Presence of Channel Errors}
@@ -853,14 +865,14 @@ The first results are for an ideal channel that does not introduce errors.
 We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source_paper_dcs} .}
 The results are presented in Fig.~\ref{fig:convergence_avg}.
 
-To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
-These percentiles provide an idea of the distribution of the value of the number steps required to reach collision-free operation.
-\begin{figure}[h]
-\centering
-\includegraphics[height=6.2cm]{figures/convergence_stats}
-\caption{The 5, 25, 50, 75, and 95 percentiles of the number of steps to convergence obtained from 10,000 simulation runs. $B=16$ and $N$ takes values from 2 to 16.}
-\label{fig:convergence_stats}
-\end{figure}
+%To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
+%These percentiles provide an idea of the distribution of the value of the number steps required to reach collision-free operation.
+%\begin{figure}[h]
+%\centering
+%\includegraphics[height=6.2cm]{figures/convergence_stats}
+%\caption{The 5, 25, 50, 75, and 95 percentiles of the number of steps to convergence obtained from 10,000 simulation runs. $B=16$ and $N$ takes values from 2 to 16.}
+%\label{fig:convergence_stats}
+%\end{figure}
 
 
 \subsection{Results in the presence of channel errors}
@@ -877,10 +889,10 @@ The results for a channel error probability $\epsilon=0.1$, different numbers of
 \section{Conclusion}
 \label{sec:conclusion}
 
-In this paper we have studied a decentralize CSP solver to assign channel slots to contending stations.
-The stations deterministically choose their transmission slots after successful transmissions.
-If the transmission is not successful, the station randomly chooses its next transmission slot.
-The system eventually converges to collision-free operation in ideal channel conditions.
+In this paper we have studied a decentralized CSP solver to assign channel slots to contending stations which eventually converges to collision-free operation under ideal channel conditions.
+%The stations deterministically choose their transmission slots after successful transmissions.
+%If the transmission is not successful, the station randomly chooses its next transmission slot.
+%The system eventually converges to collision-free operation in ideal channel conditions.
 
 We have modeled the convergence process as a MC and have derived closed expressions for the transition probabilities.
 These values can be used to compute the expected number of steps required for the system to converge to a solution.
@@ -908,39 +920,39 @@ The presented results have been validated by means of simulation.
 %
 
 
-\appendices
-\section{Generalized Inclusion Exclusion Illustration}
-\label{app:incl-excl-thm}
-\label{app:theorem}
-We offer an example of the counting problem in (\ref{eq:Pij})  in which we are interested in computing the probability that exactly $delta$ among the $N$ stations succeed.
-
-\begin{figure}
-\psfrag{A1}[cc][cc]{$A_1$}
-\psfrag{A2}[cc][cc]{$A_2$}
-\psfrag{A3}[cc][cc]{$A_3$}
-\centering
-\includegraphics[height=3cm]{figures/counting}
-\caption{Illustration of the counting problem}
-\label{fig:counting}
-\end{figure}
-
-To illustrate the underlying idea we will use a simple example involving $N=3$ different stations choosing among $B=4$ different slots.
-We assume that the number of stations deterministically choosing its transmission slot is $d=0$ and we are interested in computing the probability that exactly $\delta=1$ station succeeds.
-
-There are a total of $B^N=4^3$ outcomes that are represented as black dots in Fig.~\ref{fig:counting}.
-Each outcome is equally likely with probability $1/64$.
-The figure also shows three events $A_1$, $A_2$ and $A_3$.
-The first event, $A_1$ represents the outcomes in which the first station succeeds.
-Similarly, the other two events, $A_2$ and $A_3$, represent the outcomes in which station 2 and 3 succeed, respectively.
-These sets are partially overlapping.
-Note also that it is impossible that two stations succeed while the third station collides.
-
-If we want to compute the probability that exactly one station succeeds, we have to count the outcomes that belong to either $A_1$, $A_2$ or $A_3$ and are not part of the intersections.
-This is $|A_1|+|A_2|+|A_3|-2(|A_1\cap A_2|+|A_1\cap A_3|+|A_2\cap A_3|)+3(|A_1\cap A_2\cap A_3|)$.
-In our paper we will use the intermediate values
- $S(1)=P(A_1)+P(A_2)+P(A_3)$,
- $S(2)=P(A_1\cap A_2)+P(A_1\cap A_3)+P(A_2\cap A_3)$, and $S(3)=P(A_1\cap A_2\cap A_3)$.
- The probability that exactly one station succeeds is finally computed  as $S(1)-2S(2)+3S(3)$.
+%\appendices
+%\section{Generalized Inclusion Exclusion Illustration}
+%\label{app:incl-excl-thm}
+%\label{app:theorem}
+%We offer an example of the counting problem in (\ref{eq:Pij})  in which we are interested in computing the probability that exactly $delta$ among the $N$ stations succeed.
+%
+%\begin{figure}
+%\psfrag{A1}[cc][cc]{$A_1$}
+%\psfrag{A2}[cc][cc]{$A_2$}
+%\psfrag{A3}[cc][cc]{$A_3$}
+%\centering
+%\includegraphics[height=3cm]{figures/counting}
+%\caption{Illustration of the counting problem}
+%\label{fig:counting}
+%\end{figure}
+%
+%To illustrate the underlying idea we will use a simple example involving $N=3$ different stations choosing among $B=4$ different slots.
+%We assume that the number of stations deterministically choosing its transmission slot is $d=0$ and we are interested in computing the probability that exactly $\delta=1$ station succeeds.
+%
+%There are a total of $B^N=4^3$ outcomes that are represented as black dots in Fig.~\ref{fig:counting}.
+%Each outcome is equally likely with probability $1/64$.
+%The figure also shows three events $A_1$, $A_2$ and $A_3$.
+%The first event, $A_1$ represents the outcomes in which the first station succeeds.
+%Similarly, the other two events, $A_2$ and $A_3$, represent the outcomes in which station 2 and 3 succeed, respectively.
+%These sets are partially overlapping.
+%Note also that it is impossible that two stations succeed while the third station collides.
+%
+%If we want to compute the probability that exactly one station succeeds, we have to count the outcomes that belong to either $A_1$, $A_2$ or $A_3$ and are not part of the intersections.
+%This is $|A_1|+|A_2|+|A_3|-2(|A_1\cap A_2|+|A_1\cap A_3|+|A_2\cap A_3|)+3(|A_1\cap A_2\cap A_3|)$.
+%In our paper we will use the intermediate values
+% $S(1)=P(A_1)+P(A_2)+P(A_3)$,
+% $S(2)=P(A_1\cap A_2)+P(A_1\cap A_3)+P(A_2\cap A_3)$, and $S(3)=P(A_1\cap A_2\cap A_3)$.
+% The probability that exactly one station succeeds is finally computed  as $S(1)-2S(2)+3S(3)$.
 
 
 % use section* for acknowledgement
@@ -999,22 +1011,22 @@ The authors would like to thank...
 %\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
 % or if you just want to reserve a space for a photo:
 
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
-\end{IEEEbiography}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
+%\begin{IEEEbiography}{Michael Shell}
+%Biography text here.
+%\end{IEEEbiography}
+%
+%% if you will not have a photo at all:
+%\begin{IEEEbiographynophoto}{John Doe}
+%Biography text here.
+%\end{IEEEbiographynophoto}
+%
+%% insert where needed to balance the two columns on the last page with
+%% biographies
+%%\newpage
+%
+%\begin{IEEEbiographynophoto}{Jane Doe}
+%Biography text here.
+%\end{IEEEbiographynophoto}
 
 % You can push biographies down or up by placing
 % a \vfill before or after them. The appropriate
