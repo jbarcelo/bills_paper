@@ -845,25 +845,30 @@ p^{B,N,\epsilon}_{d,\delta}= p^{B,N}_{d,\delta} (1-\epsilon)^\delta + \sum_{i=\d
 In other words, the probability that there are exactly $\delta$ successful stations is the probability that there are $\delta$ stations that do not collide and none of them suffers a collision plus the probability that there are $i$ ($\delta < i \leq N$) stations that do not collide and exactly $i-\delta$ of those stations suffer a collision.
 Note that the resulting MC is no longer absorbing.
 
-\section{Numerical Results}
-\label{sec:numerical_results}
+\subsection{Validation}
+The expressions presented in this section have been validated by means of a custom simulator that captures the reference scenario and protocol presented in Section. \ref{}.
+We do not include the plots for conciseness.
+They are available in the technical report \cite{}.
 
-\begin{figure}
-\centering
-\includegraphics[height=6.2cm]{figures/convergence_avg}
-\caption{The analytically computed expectation is compared to simulation averages. Two different values for $B$ have been considered ($B=8$ and $B=16$) and $N$ takes values from 2 to 16.}
-\label{fig:convergence_avg}
-\end{figure}
-
-
-In this section we present simulation results that validate the expressions derived in the previous section.
-The simulation scenario is exactly the one described in Sect. \ref{sec:markov_chain}.
-The number of slots in each round is set to $B=8$ and $B=16$, and the number of contenders $N$ takes values from 2 to 16.
-The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
-
-The first results are for an ideal channel that does not introduce errors.
-We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source_paper_dcs} .}
-The results are presented in Fig.~\ref{fig:convergence_avg}.
+%\section{Numerical Results}
+%\label{sec:numerical_results}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[height=6.2cm]{figures/convergence_avg}
+%\caption{The analytically computed expectation is compared to simulation averages. Two different values for $B$ have been considered ($B=8$ and $B=16$) and $N$ takes values from 2 to 16.}
+%\label{fig:convergence_avg}
+%\end{figure}
+%
+%
+%In this section we present simulation results that validate the expressions derived in the previous section.
+%The simulation scenario is exactly the one described in Sect. \ref{sec:markov_chain}.
+%The number of slots in each round is set to $B=8$ and $B=16$, and the number of contenders $N$ takes values from 2 to 16.
+%The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
+%
+%The first results are for an ideal channel that does not introduce errors.
+%We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source_paper_dcs} .}
+%The results are presented in Fig.~\ref{fig:convergence_avg}.
 
 %To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
 %These percentiles provide an idea of the distribution of the value of the number steps required to reach collision-free operation.
@@ -873,18 +878,18 @@ The results are presented in Fig.~\ref{fig:convergence_avg}.
 %\caption{The 5, 25, 50, 75, and 95 percentiles of the number of steps to convergence obtained from 10,000 simulation runs. $B=16$ and $N$ takes values from 2 to 16.}
 %\label{fig:convergence_stats}
 %\end{figure}
+%
+%
+%\subsection{Results in the presence of channel errors}
+%To validate the expression in (\ref{eq:psiBNepsilon}) we compute the average number of successful transmissions in each step from the MC and compare it with averages obtained from a simulation of 10,000 rounds.
+%The results for a channel error probability $\epsilon=0.1$, different numbers of slots ($B$) and different numbers of contenders ($N$) are presented in Fig.~\ref{fig:successful_tx_per_step}.
 
-
-\subsection{Results in the presence of channel errors}
-To validate the expression in (\ref{eq:psiBNepsilon}) we compute the average number of successful transmissions in each step from the MC and compare it with averages obtained from a simulation of 10,000 rounds.
-The results for a channel error probability $\epsilon=0.1$, different numbers of slots ($B$) and different numbers of contenders ($N$) are presented in Fig.~\ref{fig:successful_tx_per_step}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[height=6.2cm]{figures/successful_tx_per_step}
-\caption{The average number of successful transmissions in every round obtained from simulation is compared to the analytically computed expected values.}
-\label{fig:successful_tx_per_step}
-\end{figure}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[height=6.2cm]{figures/successful_tx_per_step}
+%\caption{The average number of successful transmissions in every round obtained from simulation is compared to the analytically computed expected values.}
+%\label{fig:successful_tx_per_step}
+%\end{figure}
 
 \section{Conclusion}
 \label{sec:conclusion}
