@@ -15,7 +15,7 @@
 
 MAIN		= barcelo2012mdc
 SOURCES		= $(wildcard ./*.tex)
-EPSFIGURES	= $(patsubst %.fig,%.eps,$(wildcard ./figures/*.fig))
+EPSFIGURES	= $(wildcard ./figures/*.eps)
 PDFFIGURES	= $(patsubst %.fig,%.pdf,$(wildcard ./figures/*.fig))
 
 all: bbl dvi pdf
