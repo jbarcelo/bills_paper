@@ -6,3 +6,5 @@
 *.ps
 *.dvi
 *.log
+*.bak
+*.old

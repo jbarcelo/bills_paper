@@ -59,7 +59,7 @@ ${MAIN}.pdf : ${MAIN}.dvi ${EPSFIGURES}
 	evince ${MAIN}.pdf &
 
 ${MAIN}_diff.tex: ${MAIN}.tex
-	latexdiff old.tex ${MAIN}.tex > ${MAIN}_diff.tex
+	latexdiff ${MAIN}.old ${MAIN}.tex > ${MAIN}_diff.tex
 	
 ${MAIN}_diff.dvi : ${MAIN}_diff.tex ${MAIN}_diff.bbl ${EPSFIGURES}
 	latex ${MAIN}_diff
