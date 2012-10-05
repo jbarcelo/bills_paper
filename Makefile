@@ -29,7 +29,7 @@ publish: ${MAIN}.pdf ${MAIN}_diff.pdf
 	s3cmd put --acl-public barcelo2012mdc.pdf s3://www.jaumebarcelo.info/papers/
 	s3cmd put --acl-public barcelo2012mdc_diff.pdf s3://www.jaumebarcelo.info/papers/
 
-%.bbl: my_bib.bib
+%.bbl: my_bib.bib ${MAIN}.tex
 	latex $*
 	@while ( grep "Rerun to get cross-references"	\
 			$*.log > /dev/null ); do		\
@@ -58,7 +58,7 @@ ${MAIN}.pdf : ${MAIN}.dvi ${EPSFIGURES}
 	ps2pdf -sPAPERSIZE=a4 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true ${MAIN}.ps
 	evince ${MAIN}.pdf &
 
-${MAIN}_diff.tex: ${SOURCES}
+${MAIN}_diff.tex: ${MAIN}.tex
 	latexdiff old.tex ${MAIN}.tex > ${MAIN}_diff.tex
 	
 ${MAIN}_diff.dvi : ${MAIN}_diff.tex ${MAIN}_diff.bbl ${EPSFIGURES}
