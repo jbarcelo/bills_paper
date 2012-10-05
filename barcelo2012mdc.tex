@@ -620,14 +620,22 @@ The goal of this class of protocols is to distributively build a collision-free 
 
 Similar problems can be found in other areas of networking where limited resources need to be distributed among a group of stations. Examples of such resources include channel time slots \cite{barcelo2008lba}, frequency channels \cite{duffy2011dcs}, and code division multiple access scramble codes \cite{checco2012scs}.
 
-In \cite{duffy2011dcs}, a general framework is presented that encompasses problems such as graph coloring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks. This framework consists in modeling the resource-assignment problem as a Constraint Satisfaction Problem (CSP) \cite{tsang1993fc}. When there is no central control, the corresponding CSP needs to be solved in a distributed fashion. Even though the literature on CSP is vast and comprises different families of solvers, as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solvers is very recent and is yet to be explored in depth. In \cite{duffy2011dcs}, a decentralized solver for this CSP is presented and analyzed, and a bound on the convergence time of the solver is found.
+In \cite{duffy2011dcs}, a general framework is presented that encompasses problems such as graph coloring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks.
+This framework consists in modeling the resource-assignment problem as a Constraint Satisfaction Problem (CSP) \cite{tsang1993fc}.
+When there is no central control, the corresponding CSP needs to be solved in a distributed fashion.
+The concept of decentralized CSP solvers is very recent and is yet to be explored in depth.
+In \cite{duffy2011dcs}, a decentralized solver for this CSP is presented and analyzed, and a bound on the convergence time of the solver is found.
 
 
 In this work, we focus on analyzing a MAC protocol that uses deterministic backoffs after successful transmissions, however, our results are applicable for many other distributed resource-allocation problems. Similarly to \cite{duffy2011dcs}, we model the channel access problem as a CSP for which the aforementioned protocol serves as a decentralized solver. To calculate the expected number of rounds the solver requires to reach a solution, we model the convergence process using an absorbing Markov chain (MC). The first contribution of this paper is the derivation of closed-form expressions for transition probabilities of the absorbing MC, which are then used to calculate the expected convergence time of the solver. The second contribution is the adaptation of the model to an environment in which errors can occur. 
 
 \section{System Model and the Corresponding CSP}
 
-Our focus is on the distributed assignment of $N$ contending wireless stations to $B$ channel time slots per round. In each round, each stations randomly selects one of the $B$ slots in the round. In each slot a single transmission can be completed and acknowledged.
+We consider a wireless network in which channel time is slotted.
+The slots are grouped in \emph{rounds}, and each round contains $B$ consecutive slots.
+Our focus is on the distributed assignment of $N$ contending wireless stations to the $B$ channel time slots per round.
+In each round, each stations randomly selects one of the $B$ slots in the round.
+In each slot a single transmission can be completed and acknowledged.
 A station succeeds if the slot it has chosen is not selected by any other station, in which case its transmission is acknowledged in the same slot.
 If two or more stations pick the same slot, all stations involved will suffer a collision, in which case no acknowledgment will be received.
 
@@ -672,7 +680,7 @@ Since the MC is absorbing, the expected number of steps before convergence can b
 
 \subsection{Calculating the Transition Probabilities}
 To calculate the transition probabilities, we number the stations from $1$ to $N$ and define $A_i$ to be the event that station $i$ succeeds, and the set $\mathbf{A}=\{A_i\}_{i=1}^{N}$ to be the collection of all such events.
-These events are partially overlapping since more than one station may successfully transmit. For a given $d$, the transition probability $p_{d,\delta}^{B,N}$ is the probability that exactly $\delta$ out of the $N$ events in $\Abf$ happen. As mentioned before, when $d = N$, the system is in the absorbing state $S_N$, and $p_{N,\delta}^{B,N} = 1$, when $\delta = N$, and is zero otherwise. When $d<N$, this probability can be calculated applying a generalized version of the inclusion-exclusion principle (see, e.g., the theorem in Sec. IV.3 of \cite{feller1968ipt}) as follows:
+These events are partially overlapping since more than one station may successfully transmit in the same round. For a given $d$, the transition probability $p_{d,\delta}^{B,N}$ is the probability that exactly $\delta$ out of the $N$ events in $\Abf$ happen. As mentioned before, when $d = N$, the system is in the absorbing state $S_N$, and $p_{N,\delta}^{B,N} = 1$, when $\delta = N$, and is zero otherwise. When $d<N$, this probability can be calculated applying a generalized version of the inclusion-exclusion principle (see, e.g., the theorem in Sec. IV.3 of \cite{feller1968ipt}) as follows:
 \begin{equation}
 \label{eq:Pij}
 p^{B,N}_{d,\delta} = \sum_{j=\delta}^{N} (-1)^{j+\delta}\binom{j}{\delta} S(j),
@@ -760,7 +768,6 @@ where $\epsilon$ is the channel error probability. Note that the resulting MC is
 
 
 In this section we present simulation results that validate the expressions derived in the previous section.
-The simulation scenario is exactly the one described in Sect. \ref{sec:markov_chain}.
 The number of slots in each round is set to $B=8$ and $B=16$, and the number of contenders $N$ takes values from 2 to 16.
 The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
 
