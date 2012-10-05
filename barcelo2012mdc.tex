@@ -484,8 +484,12 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
         Nuria~Garcia, %~\IEEEmembership{Fellow,~OSA,}
         Azadeh~Faridi, \IEEEmembership{Member, IEEE,}
         Simon~Oechsner, %~\IEEEmembership{Fellow,~OSA,}
-        and~Boris~Bellalta,~\IEEEmembership{Senior Member,~IEEE}% <-this % stops a space
-\thanks{The authors are with Universitat Pompeu Fabra}}
+        and~Boris~Bellalta,~\IEEEmembership{Senior~Member,~IEEE}% <-this % stops a space
+\thanks{The authors are with Universitat Pompeu Fabra,
+Roc Boronat 138, 08018 Barcelona, Catalunya.
+E-mail: \{name.surname\}@upf.edu
+}
+}
 
 % note the % following the last \IEEEmembership and also \thanks -
 % these prevent an unwanted space from occurring between the last author name
@@ -540,9 +544,10 @@ height \snellskip\kern-.5em&\multispan#2\hrulefill\cr}
 
 
 \begin{abstract}
-In this paper, the problem of assigning channel time to a number of contending stations is modeled as a Constraint Satisfaction Problem (CSP).
+In this paper, the problem of assigning channel slots to a number of contending stations is modeled as a Constraint Satisfaction Problem (CSP).
 A learning MAC protocol that uses deterministic backoffs after successful transmissions is used as a decentralized solver for the CSP.
-The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived, and the expected number of steps required to reach a solution is found.
+The convergence process of the solver is modeled by an absorbing Markov chain (MC), and analytical, closed-form expressions for its transition probabilities are derived.
+Using these, the expected number of steps required to reach a solution is found.
 The analysis is validated by means of simulations and the model is extended to account for the presence of channel errors.
 The results are applicable in various resource allocation scenarios in wireless networks.
 
@@ -615,7 +620,7 @@ The goal of this class of protocols is to distributively build a collision-free 
 
 Similar problems can be found in other areas of networking where limited resources need to be distributed among a group of stations. Examples of such resources include channel time slots \cite{barcelo2008lba}, frequency channels \cite{duffy2011dcs}, and code division multiple access scramble codes \cite{checco2012scs}.
 
-In \cite{duffy2011dcs}, a general framework is presented that encompasses problems such as graph coloring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks. This framework consists in modeling the resource-assignment problem as a Constraint Satisfaction Problem (CSP) \cite{}. When there is no central control, the corresponding CSP needs to be solved in a distributed fashion. Even though the literature on CSP is vast and comprises different families of solvers, as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solvers is very recent and is yet to be explored in depth. In \cite{duffy2011dcs}, a decentralized solver for this CSP is presented and analyzed, and a bound on the convergence time of the solver is found.
+In \cite{duffy2011dcs}, a general framework is presented that encompasses problems such as graph coloring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks. This framework consists in modeling the resource-assignment problem as a Constraint Satisfaction Problem (CSP) \cite{tsang1993fc}. When there is no central control, the corresponding CSP needs to be solved in a distributed fashion. Even though the literature on CSP is vast and comprises different families of solvers, as explained in \cite{duffy2011dcs}, the concept of decentralized CSP solvers is very recent and is yet to be explored in depth. In \cite{duffy2011dcs}, a decentralized solver for this CSP is presented and analyzed, and a bound on the convergence time of the solver is found.
 
 
 In this work, we focus on analyzing a MAC protocol that uses deterministic backoffs after successful transmissions, however, our results are applicable for many other distributed resource-allocation problems. Similarly to \cite{duffy2011dcs}, we model the channel access problem as a CSP for which the aforementioned protocol serves as a decentralized solver. To calculate the expected number of rounds the solver requires to reach a solution, we model the convergence process using an absorbing Markov chain (MC). The first contribution of this paper is the derivation of closed-form expressions for transition probabilities of the absorbing MC, which are then used to calculate the expected convergence time of the solver. The second contribution is the adaptation of the model to an environment in which errors can occur. 
