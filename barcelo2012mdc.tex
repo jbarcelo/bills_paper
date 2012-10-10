@@ -622,10 +622,10 @@ Similar problems can be found in other areas of networking where limited resourc
 
 In \cite{duffy2011dcs}, a general framework is presented that encompasses problems such as graph coloring, channel assignment to WLANs cells, the search for feasible inter-flow codes in network coding, and the construction of collision-free schedules in CSMA networks.
 This framework consists in modeling the resource-assignment problem as a Constraint Satisfaction Problem (CSP) \cite{tsang1993fcs}.
-When the nodes that participate in the CSP cannot communicate among them to solve the problem, a decentralized approach is required.
+When the nodes that participate in the CSP cannot communicate with one another to solve the problem, a decentralized approach is required.
+Decentralized solvers are different from distributed solvers \cite{yokoo2000adc}, which require message exchange among the participating nodes.
 The concept of decentralized CSP solvers is very recent and is yet to be explored in depth.
 In \cite{duffy2011dcs}, a decentralized solver for this CSP is presented and analyzed, and a bound on the convergence time of the solver is found.
-Decentralized solvers are different from distributed solvers \cite{yokoo2000adc}, which require message exchange among the participating nodes.
 
 
 In this work, we focus on analyzing a MAC protocol that uses deterministic backoffs after successful transmissions, however, our results are applicable for many other distributed resource-allocation problems. Similarly to \cite{duffy2011dcs}, we model the channel access problem as a CSP for which the aforementioned protocol serves as a decentralized solver. To calculate the expected number of rounds the solver requires to reach a solution, we model the convergence process using an absorbing Markov chain (MC). The first contribution of this paper is the derivation of closed-form expressions for transition probabilities of the absorbing MC, which are then used to calculate the expected convergence time of the solver. The second contribution is the adaptation of the model to an environment in which errors can occur. 
@@ -773,7 +773,7 @@ The number of slots in each round is set to $B=8$ and $B=16$, and the number of 
 The contenders choose the same slot in the case of successful transmission and a random slot if the transmission is unsuccessful.
 
 The first results are for an ideal channel that does not introduce errors.
-We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source_paper_dcs} .}
+We compare the analytically computed expected number of steps to absorption and the average number of steps to reach collision-free operation obtained from 10,000 executions of a custom simulator.\footnote{The two simulators in \emph{C} that we have used and the scripts in \emph{maxima} to compute the expectations derived from the analytical model can be downloaded from \url{https://github.com/jbarcelo/source-paper-mdc} .}
 The results are presented in Fig.~\ref{fig:convergence_avg}.
 
 %To offer further insight on the convergence process, we also compute the 5-th, 25-th, 50-th, 75-th and 95-th percentiles of the number of steps to absorption for the case $B=16$, which are presented in Fig.~\ref{fig:convergence_stats}.
